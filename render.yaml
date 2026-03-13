@@ -1,0 +1,49 @@
+services:
+  - type: web
+    name: social-media-dist
+    runtime: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_ASSET_BUCKET
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: AI_MODEL
+        sync: false
+      - key: N8N_WEBHOOK_SHARED_SECRET
+        sync: false
+      - key: KIE_API_KEY
+        sync: false
+      - key: KIE_API_BASE_URL
+        sync: false
+      - key: KIE_IMAGE_SUBMIT_PATH
+        sync: false
+      - key: KIE_IMAGE_RECORD_PATH
+        sync: false
+      - key: KIE_IMAGE_DOWNLOAD_PATH
+        sync: false
+      - key: PUBLER_API_KEY
+        sync: false
+      - key: PUBLER_API_BASE_URL
+        sync: false
+      - key: PUBLER_POSTS_PATH
+        sync: false
+      - key: PUBLER_JOB_STATUS_TEMPLATE
+        sync: false
+      - key: GOOGLE_SHEETS_SERVICE_ACCOUNT_JSON
+        sync: false
+      - key: GOOGLE_SHEETS_SPREADSHEET_ID
+        sync: false
+      - key: GOOGLE_SHEETS_DEFAULT_SHEET
+        sync: false
