@@ -30,7 +30,7 @@ export default async function DashboardPage() {
   const leadWorkspace = workspaces[0];
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="page-stack">
       <section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
         <Card padding="none" className="rounded-[32px] border-border/70">
           <div className="relative overflow-hidden px-6 py-7 sm:px-8 sm:py-8">
@@ -197,11 +197,15 @@ export default async function DashboardPage() {
       </section>
 
       <section className="section-shell">
-        <div className="flex items-start justify-between gap-4">
+        <div className="section-header">
           <div>
             <p className="eyebrow">Workspace directory</p>
-            <h2 className="mt-2 text-2xl font-semibold">Select a site workspace</h2>
+            <h2 className="section-subtitle mt-3">Select a site workspace</h2>
+            <p className="section-copy mt-3">
+              Each workspace stays isolated with its own prompts, approvals, publishing accounts, and history.
+            </p>
           </div>
+          <div className="toolbar-chip">{workspaces.length} workspace{workspaces.length === 1 ? '' : 's'}</div>
         </div>
 
         {!workspaces.length ? (

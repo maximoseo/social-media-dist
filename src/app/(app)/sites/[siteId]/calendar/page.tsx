@@ -15,20 +15,36 @@ export default async function SiteCalendarPage({ params }: { params: { siteId: s
   const scheduledEntryIds = entries.filter((entry) => entry.status === 'scheduled').map((entry) => entry.id);
 
   return (
-    <div className="flex flex-col gap-6">
-      <section className="section-shell">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <p className="eyebrow">Long-range content calendar</p>
-            <h1 className="mt-2 text-3xl font-semibold">{bundle.site.name} publishing calendar</h1>
-            <p className="mt-3 text-sm text-text-secondary">
-              Plan monthly and weekly schedules, then sync selected items to Publer or publish immediately.
-            </p>
+    <div className="page-stack">
+      <section className="page-hero">
+        <div className="page-hero-inner">
+          <div className="section-header">
+            <div>
+              <p className="eyebrow">Long-range content calendar</p>
+              <h1 className="section-title mt-3">{bundle.site.name} publishing calendar</h1>
+              <p className="section-copy mt-3">
+                Plan monthly and weekly schedules, then sync selected items to Publer or publish
+                immediately without losing visibility into queue state.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <div className="toolbar-chip">{scheduledEntryIds.length} scheduled entries ready</div>
+              <SyncGoogleSheetsButton siteId={params.siteId} entryIds={scheduledEntryIds} />
+              <PublishSelectionButton siteId={params.siteId} entryIds={scheduledEntryIds} mode="schedule" />
+              <PublishSelectionButton siteId={params.siteId} entryIds={scheduledEntryIds} mode="publish_now" />
+            </div>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <SyncGoogleSheetsButton siteId={params.siteId} entryIds={scheduledEntryIds} />
-            <PublishSelectionButton siteId={params.siteId} entryIds={scheduledEntryIds} mode="schedule" />
-            <PublishSelectionButton siteId={params.siteId} entryIds={scheduledEntryIds} mode="publish_now" />
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              'Use month view for campaign planning and week view to inspect publish density.',
+              'Only scheduled entries are passed into Publer and Google Sheets actions from this screen.',
+              'History and activity pages keep the downstream publish results observable.',
+            ].map((item) => (
+              <div key={item} className="data-card text-sm leading-6 text-text-secondary">
+                {item}
+              </div>
+            ))}
           </div>
         </div>
       </section>

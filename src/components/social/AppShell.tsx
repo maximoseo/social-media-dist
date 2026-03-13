@@ -10,6 +10,7 @@ import {
   History,
   LayoutDashboard,
   LibraryBig,
+  Orbit,
   ShieldCheck,
   Settings2,
 } from 'lucide-react';
@@ -58,7 +59,7 @@ export function AppShell({
 
   return (
     <div className="flex min-h-screen bg-transparent">
-      <aside className="hidden w-[320px] shrink-0 flex-col border-r border-white/5 bg-sidebar-bg px-5 py-5 text-sidebar-text lg:flex">
+      <aside className="hidden w-[318px] shrink-0 flex-col border-r border-white/5 bg-sidebar-bg px-5 py-5 text-sidebar-text lg:flex">
         <Link
           href="/dashboard"
           className="rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] px-5 py-5 shadow-[0_30px_80px_-55px_rgba(14,165,233,0.8)] backdrop-blur"
@@ -86,7 +87,11 @@ export function AppShell({
           </div>
         </Link>
 
-        <nav className="mt-8 space-y-2">
+        <div className="mt-8 px-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/38">Navigation</p>
+        </div>
+
+        <nav className="mt-3 space-y-2">
           <SidebarLink href="/dashboard" active={isLinkActive(pathname, '/dashboard')} icon={LayoutDashboard}>
             Workspaces
           </SidebarLink>
@@ -103,7 +108,22 @@ export function AppShell({
             ))}
         </nav>
 
-        <div className="mt-8">
+        {currentSite ? (
+          <div className="mt-6 rounded-[28px] border border-white/8 bg-white/[0.04] p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="eyebrow text-white/45">Current site</p>
+                <p className="mt-2 text-base font-semibold text-white">{currentSite.name}</p>
+                <p className="mt-1 text-sm text-white/55">{currentSite.domain}</p>
+              </div>
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-accent">
+                <Orbit className="h-4 w-4" />
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        <div className="mt-6">
           <div className="flex items-center justify-between px-3">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">
               Sites
@@ -154,11 +174,17 @@ export function AppShell({
       </aside>
 
       <div className="flex min-h-screen flex-1 flex-col">
-        <header className="sticky top-0 z-20 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-          <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-4 px-4 py-4 sm:px-6">
+        <header className="sticky top-0 z-20 border-b border-border/60 bg-background/76 backdrop-blur-xl">
+          <div className="page-shell flex items-center justify-between gap-4 px-4 py-4 sm:px-6">
             <div>
-              <p className="eyebrow">{currentSite ? 'Site cockpit' : 'Publishing control'}</p>
-              <h1 className="mt-2 text-lg font-semibold tracking-tight sm:text-xl">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="toolbar-chip">
+                  <span className="h-2 w-2 rounded-full bg-success animate-pulse-dot" />
+                  {currentSite ? 'Site cockpit' : 'Publishing control'}
+                </span>
+                {currentSite ? <span className="toolbar-chip hidden sm:inline-flex">{currentSite.domain}</span> : null}
+              </div>
+              <h1 className="mt-3 text-xl font-semibold tracking-tight sm:text-[1.65rem]">
                 {currentSite ? currentSite.name : 'Workspace Dashboard'}
               </h1>
               <p className="mt-1 text-sm text-text-secondary">
@@ -177,7 +203,7 @@ export function AppShell({
             </div>
           </div>
           <div className="border-t border-border/50 lg:hidden">
-            <div className="mx-auto max-w-[1600px] px-4 py-3 sm:px-6">
+            <div className="page-shell px-4 py-3 sm:px-6">
               <div className="flex gap-2 overflow-x-auto pb-1">
                 {mobileLinks.map((item) => (
                   <Link
@@ -197,7 +223,7 @@ export function AppShell({
             </div>
           </div>
         </header>
-        <main className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col px-4 py-6 sm:px-6">
+        <main className="page-shell flex flex-1 flex-col px-4 py-8 sm:px-6">
           {children}
         </main>
       </div>
@@ -232,14 +258,23 @@ function SidebarLink({
     <Link
       href={href}
       className={cn(
-        'flex items-center justify-between gap-3 rounded-[22px] border px-3.5 py-3 text-sm font-medium transition-all',
+        'group flex items-center justify-between gap-3 rounded-[22px] border px-3.5 py-3 text-sm font-medium transition-all',
         active
           ? 'border-accent/25 bg-accent/[0.12] text-white shadow-[0_18px_40px_-34px_rgba(14,165,233,0.9)]'
           : 'border-transparent text-white/60 hover:border-white/10 hover:bg-white/[0.055] hover:text-white',
       )}
     >
       <span className="flex items-center gap-3">
-        <Icon className="h-4 w-4" />
+        <span
+          className={cn(
+            'flex h-9 w-9 items-center justify-center rounded-2xl border transition-all',
+            active
+              ? 'border-accent/20 bg-accent/[0.14] text-accent'
+              : 'border-white/8 bg-white/[0.035] text-white/60 group-hover:border-white/12 group-hover:text-white',
+          )}
+        >
+          <Icon className="h-4 w-4" />
+        </span>
         {children}
       </span>
       {active ? <span className="h-2 w-2 rounded-full bg-accent" /> : null}

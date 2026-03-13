@@ -16,14 +16,21 @@ export default async function SiteHistoryPage({ params }: { params: { siteId: st
 
   return (
     <section className="section-shell">
-      <div>
-        <p className="eyebrow">Publishing history</p>
-        <h1 className="mt-2 text-3xl font-semibold">Publer jobs and outcomes</h1>
+      <div className="section-header">
+        <div>
+          <p className="eyebrow">Publishing history</p>
+          <h1 className="section-title mt-3">Publer jobs and outcomes</h1>
+          <p className="section-copy mt-3">
+            See what has already been sent to Publer, which jobs failed, and which entries need to
+            be synced again or retried.
+          </p>
+        </div>
+        <div className="toolbar-chip">{history.length} jobs logged</div>
       </div>
       <div className="mt-6 space-y-3">
         {history.length ? (
           history.map((job) => (
-            <Card key={job.id} className="rounded-3xl border-border/70">
+            <Card key={job.id} className="rounded-[28px] border-border/70">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-sm font-semibold">{job.action.replace('_', ' ')}</p>

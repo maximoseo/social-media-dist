@@ -1,6 +1,8 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { AlertTriangle, CheckCircle2, Info, X, XCircle } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export type ToastVariant = 'success' | 'error' | 'warning' | 'info';
 
@@ -61,7 +63,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
 function ToastContainer({ toasts, onRemove }: { toasts: Toast[]; onRemove: (id: string) => void }) {
   return (
-    <div className="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-md w-full pointer-events-none">
+    <div className="fixed right-4 top-4 z-[100] flex w-full max-w-md flex-col gap-3 pointer-events-none">
       {toasts.map((toast) => (
         <ToastItem key={toast.id} toast={toast} onRemove={onRemove} />
       ))}
@@ -78,59 +80,51 @@ function ToastItem({ toast, onRemove }: { toast: Toast; onRemove: (id: string) =
   };
 
   const variantStyles = {
-    success: 'bg-success/90 border-success text-white',
-    error: 'bg-destructive/90 border-destructive text-white',
-    warning: 'bg-warning/90 border-warning text-white',
-    info: 'bg-info/90 border-info text-white',
+    success: 'border-success/25 bg-[linear-gradient(135deg,hsl(var(--success))/0.18,hsl(var(--surface))/0.98)] text-text-primary',
+    error: 'border-destructive/25 bg-[linear-gradient(135deg,hsl(var(--destructive))/0.18,hsl(var(--surface))/0.98)] text-text-primary',
+    warning: 'border-warning/25 bg-[linear-gradient(135deg,hsl(var(--warning))/0.18,hsl(var(--surface))/0.98)] text-text-primary',
+    info: 'border-info/25 bg-[linear-gradient(135deg,hsl(var(--info))/0.18,hsl(var(--surface))/0.98)] text-text-primary',
   };
 
   const iconStyles = {
-    success: 'text-success-foreground',
-    error: 'text-destructive-foreground',
-    warning: 'text-warning-foreground',
-    info: 'text-info-foreground',
+    success: 'text-success',
+    error: 'text-destructive',
+    warning: 'text-warning',
+    info: 'text-info',
   };
 
   return (
     <div
-      className={`
-        pointer-events-auto flex items-start gap-3 px-4 py-3 rounded-lg border shadow-lg
-        backdrop-blur-sm transition-all duration-200 ease-out
-        ${variantStyles[toast.variant]}
-        ${isLeaving ? 'opacity-0 translate-x-4 scale-95' : 'opacity-100 translate-x-0 scale-100'}
-      `}
+      className={cn(
+        'pointer-events-auto flex items-start gap-3 rounded-[24px] border px-4 py-4 shadow-[0_26px_70px_-42px_rgba(0,0,0,0.9)] backdrop-blur-md transition-all duration-200 ease-out',
+        variantStyles[toast.variant],
+        isLeaving ? 'translate-x-4 scale-95 opacity-0' : 'translate-x-0 scale-100 opacity-100',
+      )}
     >
-      <span className={`flex-shrink-0 mt-0.5 ${iconStyles[toast.variant]}`}>
-        {toast.variant === 'success' && (
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        )}
-        {toast.variant === 'error' && (
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        )}
-        {toast.variant === 'warning' && (
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-        )}
-        {toast.variant === 'info' && (
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        )}
+      <span className={cn('mt-0.5 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl border border-current/15 bg-current/[0.08]', iconStyles[toast.variant])}>
+        {toast.variant === 'success' && <CheckCircle2 className="h-5 w-5" />}
+        {toast.variant === 'error' && <XCircle className="h-5 w-5" />}
+        {toast.variant === 'warning' && <AlertTriangle className="h-5 w-5" />}
+        {toast.variant === 'info' && <Info className="h-5 w-5" />}
       </span>
-      <p className="flex-1 text-body-sm font-medium">{toast.message}</p>
+      <div className="flex-1">
+        <p className="text-sm font-semibold text-text-primary">
+          {toast.variant === 'success'
+            ? 'Success'
+            : toast.variant === 'error'
+              ? 'Action failed'
+              : toast.variant === 'warning'
+                ? 'Attention'
+                : 'Update'}
+        </p>
+        <p className="mt-1 text-sm leading-6 text-text-secondary">{toast.message}</p>
+      </div>
       <button
         onClick={handleDismiss}
-        className="flex-shrink-0 ml-2 opacity-70 hover:opacity-100 transition-opacity"
+        className="ml-2 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl text-text-muted transition-colors hover:bg-surface-raised hover:text-text-primary"
         aria-label="Dismiss"
       >
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-        </svg>
+        <X className="h-4 w-4" />
       </button>
     </div>
   );

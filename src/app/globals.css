@@ -44,20 +44,20 @@
   }
 
   .dark {
-    --background: 224 38% 6%;
-    --surface: 221 30% 10%;
-    --surface-raised: 220 24% 14%;
-    --surface-overlay: 224 35% 8%;
+    --background: 225 40% 6%;
+    --surface: 222 28% 10%;
+    --surface-raised: 221 23% 14%;
+    --surface-overlay: 224 34% 8%;
     --border: 219 18% 22%;
-    --border-subtle: 220 18% 15%;
+    --border-subtle: 220 16% 14%;
     --text-primary: 214 62% 96%;
     --text-secondary: 214 23% 74%;
     --text-muted: 217 12% 56%;
     --text-inverted: 220 30% 7%;
-    --accent: 199 100% 57%;
-    --accent-hover: 199 100% 62%;
+    --accent: 194 92% 58%;
+    --accent-hover: 194 92% 64%;
     --accent-foreground: 219 37% 9%;
-    --accent-muted: 199 77% 16%;
+    --accent-muted: 194 62% 15%;
     --destructive: 0 80% 61%;
     --destructive-foreground: 0 0% 100%;
     --success: 152 76% 37%;
@@ -69,16 +69,16 @@
     --info: 214 100% 64%;
     --info-foreground: 220 30% 7%;
     --info-muted: 214 51% 16%;
-    --input-bg: 222 24% 12%;
-    --input-border: 219 18% 24%;
-    --input-focus: 199 100% 57%;
-    --ring: 199 100% 57%;
-    --sidebar-bg: 224 44% 5%;
-    --sidebar-active: 198 80% 18%;
+    --input-bg: 223 23% 12%;
+    --input-border: 219 16% 26%;
+    --input-focus: 194 92% 58%;
+    --ring: 194 92% 58%;
+    --sidebar-bg: 226 42% 5%;
+    --sidebar-active: 194 74% 16%;
     --sidebar-text: 214 24% 78%;
-    --tab-active: 199 100% 57%;
+    --tab-active: 194 92% 58%;
     --tab-inactive: 218 12% 50%;
-    --scrollbar-track: 220 28% 8%;
+    --scrollbar-track: 221 28% 8%;
     --scrollbar-thumb: 219 16% 24%;
   }
 
@@ -92,10 +92,10 @@
 
   body {
     background:
-      radial-gradient(circle at 0% 0%, hsl(var(--accent) / 0.16), transparent 26%),
-      radial-gradient(circle at 100% 0%, hsl(var(--warning) / 0.12), transparent 24%),
+      radial-gradient(circle at 0% 0%, hsl(var(--accent) / 0.17), transparent 26%),
+      radial-gradient(circle at 100% 0%, hsl(var(--warning) / 0.1), transparent 22%),
       radial-gradient(circle at 50% 100%, hsl(var(--info) / 0.08), transparent 28%),
-      linear-gradient(180deg, hsl(var(--background)), hsl(223 34% 5%));
+      linear-gradient(180deg, hsl(var(--background)), hsl(224 37% 5%));
     font-family: var(--font-sans), sans-serif;
     color: hsl(var(--text-primary));
     min-height: 100vh;
@@ -114,6 +114,15 @@
     opacity: 0.22;
   }
 
+  body::after {
+    content: '';
+    position: fixed;
+    inset: auto 0 0 0;
+    pointer-events: none;
+    height: 36vh;
+    background: linear-gradient(180deg, transparent, hsl(224 48% 3% / 0.7));
+  }
+
   a {
     @apply transition-colors;
   }
@@ -125,6 +134,38 @@
 }
 
 @layer utilities {
+  .page-stack {
+    @apply flex flex-col gap-8;
+  }
+
+  .page-shell {
+    @apply mx-auto w-full max-w-[1540px];
+  }
+
+  .page-hero {
+    @apply relative overflow-hidden rounded-[32px] border border-border/70 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.95)] shadow-[0_36px_120px_-64px_rgba(0,0,0,0.95)];
+  }
+
+  .page-hero-inner {
+    @apply relative flex flex-col gap-8 px-6 py-7 sm:px-8 sm:py-8;
+  }
+
+  .section-header {
+    @apply flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between;
+  }
+
+  .section-title {
+    @apply text-[1.9rem] font-semibold tracking-tight text-text-primary sm:text-[2.2rem];
+  }
+
+  .section-subtitle {
+    @apply text-xl font-semibold tracking-tight text-text-primary;
+  }
+
+  .section-copy {
+    @apply max-w-2xl text-sm leading-6 text-text-secondary sm:text-[0.95rem];
+  }
+
   .panel {
     @apply rounded-[26px] border border-border/80 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.94)] shadow-[0_30px_90px_-52px_rgba(0,0,0,0.82)] backdrop-blur-sm;
   }
@@ -145,10 +186,50 @@
     @apply text-[2rem] font-semibold tracking-tight text-text-primary sm:text-[2.3rem];
   }
 
+  .toolbar-chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-border/70 bg-surface-overlay/75 px-3 py-1.5 text-xs font-medium text-text-secondary backdrop-blur;
+  }
+
+  .data-card {
+    @apply rounded-[24px] border border-border/70 bg-surface-raised/60 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)];
+  }
+
+  .list-card {
+    @apply rounded-[24px] border border-border/70 bg-[linear-gradient(180deg,hsl(var(--surface-raised))/0.8,hsl(var(--surface-overlay))/0.82)] px-4 py-4 transition-all;
+  }
+
+  .field-group {
+    @apply flex flex-col gap-2;
+  }
+
+  .field-label {
+    @apply text-sm font-medium text-text-primary;
+  }
+
+  .field-help {
+    @apply text-xs leading-5 text-text-muted;
+  }
+
+  .field-input {
+    @apply w-full rounded-[20px] border border-input-border/90 bg-input-bg/85 px-4 py-3 text-sm text-text-primary outline-none transition-all placeholder:text-text-muted/80 focus:border-input-focus focus:bg-surface focus:shadow-[0_0_0_4px_hsl(var(--accent)_/_0.12)];
+  }
+
+  .field-textarea {
+    @apply field-input min-h-[136px] resize-y;
+  }
+
+  .field-select {
+    @apply field-input appearance-none;
+  }
+
+  .subtle-divider {
+    @apply border-t border-border/70;
+  }
+
   .bg-grid {
     background-image:
-      linear-gradient(to right, hsl(var(--border-subtle)) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(var(--border-subtle)) 1px, transparent 1px);
+      linear-gradient(to right, hsl(var(--border-subtle) / 0.8) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border-subtle) / 0.8) 1px, transparent 1px);
     background-size: 44px 44px;
   }
 }
@@ -182,17 +263,36 @@
 }
 
 .fc .fc-toolbar.fc-header-toolbar {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .fc .fc-button-primary {
-  background: hsl(var(--accent));
-  border-color: hsl(var(--accent));
+  background: hsl(var(--surface-raised));
+  border-color: hsl(var(--border));
   color: hsl(var(--accent-foreground));
+  box-shadow: none;
+  border-radius: 999px;
+  padding: 0.6rem 0.95rem;
+  color: hsl(var(--text-primary));
 }
 
 .fc .fc-button-primary:disabled {
   opacity: 0.45;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):hover {
+  background: hsl(var(--accent) / 0.18);
+  border-color: hsl(var(--accent) / 0.3);
+  color: hsl(var(--accent));
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .fc .fc-daygrid-day-number,
@@ -208,4 +308,22 @@
 .fc-theme-standard th,
 .fc-theme-standard .fc-scrollgrid {
   border-color: hsl(var(--border-subtle));
+}
+
+.fc .fc-scrollgrid {
+  border-radius: 1.4rem;
+  overflow: hidden;
+}
+
+.fc .fc-daygrid-day-frame {
+  min-height: 132px;
+}
+
+.fc .fc-daygrid-event,
+.fc .fc-timegrid-event {
+  border: 1px solid hsl(var(--accent) / 0.28);
+  background: linear-gradient(135deg, hsl(var(--accent) / 0.18), hsl(var(--accent) / 0.1));
+  color: hsl(var(--text-primary));
+  border-radius: 0.9rem;
+  padding: 0.2rem 0.35rem;
 }

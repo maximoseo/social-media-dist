@@ -39,7 +39,7 @@ export function DraftReviewControls({
   }
 
   return (
-    <div className="flex gap-3">
+    <div className="flex flex-wrap gap-3">
       <Button
         variant="secondary"
         loading={loading === 'approved'}
@@ -76,31 +76,31 @@ export function VariantEditor({
   });
 
   return (
-    <div className="mt-4 space-y-3">
+    <div className="mt-5 space-y-4">
       <input
         value={form.hook}
         onChange={(event) => setForm((current) => ({ ...current, hook: event.target.value }))}
         placeholder="Hook"
-        className="w-full rounded-2xl border border-input-border bg-input-bg px-3 py-2 text-sm"
+        className="field-input"
       />
       <textarea
         rows={6}
         value={form.body}
         onChange={(event) => setForm((current) => ({ ...current, body: event.target.value }))}
-        className="w-full rounded-2xl border border-input-border bg-input-bg px-3 py-2 text-sm"
+        className="field-textarea min-h-[168px]"
       />
       <div className="grid gap-3 md:grid-cols-2">
         <input
           value={form.cta}
           onChange={(event) => setForm((current) => ({ ...current, cta: event.target.value }))}
           placeholder="CTA"
-          className="w-full rounded-2xl border border-input-border bg-input-bg px-3 py-2 text-sm"
+          className="field-input"
         />
         <input
           value={form.hashtags}
           onChange={(event) => setForm((current) => ({ ...current, hashtags: event.target.value }))}
           placeholder="seo, contentmarketing"
-          className="w-full rounded-2xl border border-input-border bg-input-bg px-3 py-2 text-sm"
+          className="field-input"
         />
       </div>
       <div className="flex justify-end">

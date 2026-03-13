@@ -1,8 +1,12 @@
+import { Button } from '@/components/ui';
+import { cn } from '@/lib/utils';
+
 interface EmptyStateProps {
   icon?: React.ReactNode;
   title: string;
   description?: string;
   action?: { label: string; onClick: () => void };
+  className?: string;
 }
 
 function DefaultIcon() {
@@ -13,23 +17,20 @@ function DefaultIcon() {
   );
 }
 
-export default function EmptyState({ icon, title, description, action }: EmptyStateProps) {
+export default function EmptyState({ icon, title, description, action, className }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center py-16 px-4">
-      <div className="mb-4">
+    <div className={cn('flex flex-col items-center justify-center rounded-[28px] border border-dashed border-border/80 bg-surface-overlay/60 px-5 py-16 text-center', className)}>
+      <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-3xl border border-border/70 bg-surface-raised/80">
         {icon || <DefaultIcon />}
       </div>
-      <p className="text-heading-3 text-text-secondary mb-1">{title}</p>
+      <p className="text-lg font-semibold tracking-tight text-text-primary">{title}</p>
       {description && (
-        <p className="text-body-sm text-text-muted text-center max-w-xs">{description}</p>
+        <p className="mt-2 max-w-md text-sm leading-6 text-text-secondary">{description}</p>
       )}
       {action && (
-        <button
-          onClick={action.onClick}
-          className="mt-4 px-4 py-2 text-body-sm font-medium text-text-primary bg-surface-raised hover:bg-border rounded-lg transition-colors"
-        >
+        <Button onClick={action.onClick} variant="secondary" className="mt-5">
           {action.label}
-        </button>
+        </Button>
       )}
     </div>
   );

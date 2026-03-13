@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
 
 interface Tab {
   id: string;
@@ -42,35 +43,33 @@ export default function Tabs({ tabs, activeTab, onChange }: TabsProps) {
   return (
     <div className="relative">
       {showFadeLeft && (
-        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-surface/80 to-transparent z-10 pointer-events-none" />
+        <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-8 bg-gradient-to-r from-surface to-transparent" />
       )}
       <div
         ref={containerRef}
-        className="flex border-b border-border overflow-x-auto scrollbar-none"
+        className="flex overflow-x-auto rounded-[24px] border border-border/70 bg-surface-overlay/75 p-1.5 scrollbar-none"
         style={{ scrollbarWidth: 'none' }}
       >
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => onChange(tab.id)}
-            className={`px-4 py-2.5 text-body-sm font-medium whitespace-nowrap transition-colors relative min-h-tap sm:min-h-0 ${
+            className={cn(
+              'relative min-h-tap whitespace-nowrap rounded-[18px] px-4 py-2.5 text-body-sm font-medium transition-all sm:min-h-0',
               activeTab === tab.id
-                ? 'text-accent bg-surface-raised/50'
-                : 'text-tab-inactive hover:text-text-primary hover:bg-surface-raised/30'
-            }`}
+                ? 'bg-accent/[0.12] text-accent shadow-[inset_0_0_0_1px_hsl(var(--accent)_/_0.16)]'
+                : 'text-tab-inactive hover:bg-surface-raised/50 hover:text-text-primary',
+            )}
           >
             {tab.label}
             {tab.hasContent && (
               <span className="ml-1.5 w-1.5 h-1.5 rounded-full bg-success inline-block" />
             )}
-            {activeTab === tab.id && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent" />
-            )}
           </button>
         ))}
       </div>
       {showFadeRight && (
-        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-surface/80 to-transparent z-10 pointer-events-none" />
+        <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-8 bg-gradient-to-l from-surface to-transparent" />
       )}
     </div>
   );

@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils';
+
 interface SectionLabelProps {
   children: React.ReactNode;
   className?: string;
@@ -5,7 +7,7 @@ interface SectionLabelProps {
 
 export default function SectionLabel({ children, className = '' }: SectionLabelProps) {
   return (
-    <h2 className={`text-caption font-semibold text-text-secondary uppercase tracking-wider mb-3 ${className}`}>
+    <h2 className={cn('eyebrow mb-3', className)}>
       {children}
     </h2>
   );

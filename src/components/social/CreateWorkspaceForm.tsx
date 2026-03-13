@@ -7,6 +7,12 @@ import { Button } from '@/components/ui';
 import { useToast } from '@/components/Toast';
 import { cn } from '@/lib/utils';
 
+const workspaceHighlights = [
+  { label: 'n8n intake ready', icon: Bot },
+  { label: 'Timezone aware', icon: Clock3 },
+  { label: 'Approval capable', icon: BadgeCheck },
+] as const;
+
 const inputClassName =
   'mt-2 w-full rounded-2xl border border-input-border/90 bg-input-bg/80 px-4 py-3 text-sm text-text-primary outline-none ring-0 transition-all placeholder:text-text-muted/80 focus:border-input-focus focus:bg-surface focus:shadow-[0_0_0_4px_hsl(var(--accent)_/_0.12)]';
 
@@ -59,29 +65,27 @@ export function CreateWorkspaceForm() {
       onSubmit={handleSubmit}
       className="grid gap-6 rounded-[30px] border border-border/70 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.95)] p-6 sm:p-7"
     >
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div className="section-header">
         <div className="max-w-xl">
           <p className="eyebrow">Create workspace</p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-[1.9rem]">
+          <h2 className="section-subtitle mt-3 sm:text-[1.9rem]">
             Add a new site or brand with operational defaults built in
           </h2>
-          <p className="mt-3 text-sm leading-6 text-text-secondary">
+          <p className="section-copy mt-3">
             This creates the protected workspace shell, publishing profile, and brand context used by
             article intake, draft generation, calendar scheduling, and channel sync.
           </p>
         </div>
         <div className="grid gap-2 sm:grid-cols-3 lg:w-[360px] lg:grid-cols-1">
-          {[
-            { label: 'n8n intake ready', icon: Bot },
-            { label: 'Timezone aware', icon: Clock3 },
-            { label: 'Approval capable', icon: BadgeCheck },
-          ].map((item) => (
+          {workspaceHighlights.map((item) => (
             <div
               key={item.label}
-              className="flex items-center gap-3 rounded-2xl border border-border/70 bg-surface-raised/65 px-4 py-3 text-sm text-text-secondary"
+              className="flex items-center gap-3 rounded-[22px] border border-border/70 bg-surface-raised/65 px-4 py-3 text-sm text-text-secondary"
             >
-              <item.icon className="h-4 w-4 text-accent" />
-              {item.label}
+              <span className="flex h-9 w-9 items-center justify-center rounded-2xl border border-accent/15 bg-accent/10 text-accent">
+                <item.icon className="h-4 w-4" />
+              </span>
+              <span>{item.label}</span>
             </div>
           ))}
         </div>
@@ -122,8 +126,8 @@ export function CreateWorkspaceForm() {
         />
       </div>
 
-      <label className="text-sm font-medium text-text-primary">
-        Brand voice
+      <label className="field-group">
+        <span className="field-label">Brand voice</span>
         <p className="mt-1 text-xs leading-5 text-text-muted">
           Give the generator tone constraints, messaging guardrails, and what to avoid.
         </p>
@@ -139,7 +143,7 @@ export function CreateWorkspaceForm() {
       </label>
 
       <div className="flex flex-col gap-4 border-t border-border/70 pt-5 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-text-secondary">
+        <p className="text-sm leading-6 text-text-secondary">
           The new workspace will appear in the dashboard immediately and inherit secure server-side
           integrations.
         </p>
@@ -167,8 +171,8 @@ function Input({
   icon?: React.ReactNode;
 }) {
   return (
-    <label className="text-sm font-medium text-text-primary">
-      {label}
+    <label className="field-group">
+      <span className="field-label">{label}</span>
       {description ? <p className="mt-1 text-xs leading-5 text-text-muted">{description}</p> : null}
       <div className="relative">
         {icon ? (

@@ -74,70 +74,67 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
   }, [shouldRedirect, isAuthenticated, mode, router, redirectTo]);
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div className="bg-surface/90 border border-border rounded-3xl p-8 shadow-[0_32px_120px_-48px_rgba(15,23,42,0.45)]">
-        <h2 className="text-2xl font-bold text-text-primary mb-2">
+    <div className="w-full max-w-[520px] mx-auto">
+      <div className="rounded-[32px] border border-border/80 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.96)] p-7 shadow-[0_40px_120px_-64px_rgba(0,0,0,0.9)] sm:p-8">
+        <div className="toolbar-chip w-fit border-accent/20 bg-accent/10 text-accent">
+          {mode === 'login' ? 'Secure sign in' : 'Create operator account'}
+        </div>
+        <h2 className="mt-5 text-[2rem] font-semibold tracking-tight text-text-primary">
           {mode === 'login' ? 'Sign In' : 'Create Account'}
         </h2>
-        <p className="text-body text-text-secondary mb-6">
+        <p className="mt-3 text-body text-text-secondary mb-6 leading-6">
           {mode === 'login'
             ? 'Sign in to access your article pipeline, calendar, and publishing workspaces.'
             : 'Create an account to manage sites, approvals, and scheduling.'}
         </p>
 
         {!isSupabaseConfigured && (
-          <div className="bg-warning/10 border border-warning/30 rounded-lg px-4 py-3 mb-4 text-body text-warning">
+          <div className="mb-4 rounded-[22px] border border-warning/25 bg-warning/[0.12] px-4 py-3 text-body text-warning">
             Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to enable auth.
           </div>
         )}
 
         {error && (
-          <div className="bg-destructive/10 border border-destructive/30 rounded-lg px-4 py-3 mb-4 text-body text-destructive">
+          <div className="mb-4 rounded-[22px] border border-destructive/25 bg-destructive/[0.12] px-4 py-3 text-body text-destructive">
             {error}
           </div>
         )}
 
         {success && (
-          <div className="bg-success/10 border border-success/30 rounded-lg px-4 py-3 mb-4 text-body text-success">
+          <div className="mb-4 rounded-[22px] border border-success/25 bg-success/[0.12] px-4 py-3 text-body text-success">
             {success}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === 'register' && (
-            <div>
-              <label className="block text-body-sm font-medium text-text-primary mb-1.5">
-                Display Name
-              </label>
+            <div className="field-group">
+              <label className="field-label">Display Name</label>
               <input
                 type="text"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 placeholder="Your name"
                 required
-                className="w-full bg-input-bg border border-input-border rounded-lg px-3 py-2.5 text-text-primary placeholder-text-muted focus:outline-none focus:border-input-focus focus:ring-1 focus:ring-ring"
+                className="field-input"
               />
             </div>
           )}
 
-          <div>
-            <label className="block text-body-sm font-medium text-text-primary mb-1.5">
-              Email
-            </label>
+          <div className="field-group">
+            <label className="field-label">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              className="w-full bg-input-bg border border-input-border rounded-lg px-3 py-2.5 text-text-primary placeholder-text-muted focus:outline-none focus:border-input-focus focus:ring-1 focus:ring-ring"
+              className="field-input"
             />
           </div>
 
-          <div>
-            <label className="block text-body-sm font-medium text-text-primary mb-1.5">
-              Password
-            </label>
+          <div className="field-group">
+            <label className="field-label">Password</label>
             <input
               type="password"
               value={password}
@@ -145,7 +142,7 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
               placeholder="At least 6 characters"
               required
               minLength={6}
-              className="w-full bg-input-bg border border-input-border rounded-lg px-3 py-2.5 text-text-primary placeholder-text-muted focus:outline-none focus:border-input-focus focus:ring-1 focus:ring-ring"
+              className="field-input"
             />
           </div>
 
@@ -161,7 +158,7 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
           </Button>
         </form>
 
-        <div className="mt-6 text-center text-body-sm text-text-secondary">
+        <div className="subtle-divider mt-6 pt-5 text-center text-body-sm text-text-secondary">
           {mode === 'login' ? (
             <>
               Don&apos;t have an account?{' '}

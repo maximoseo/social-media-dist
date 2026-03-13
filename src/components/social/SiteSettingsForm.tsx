@@ -2,10 +2,29 @@
 
 import { FormEvent, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Check, Globe2, Megaphone, ShieldCheck, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { useToast } from '@/components/Toast';
 import type { SiteBundle } from '@/lib/social/types';
 import { SOCIAL_PLATFORMS } from '@/lib/social/constants';
+
+const settingsHighlights = [
+  {
+    title: 'Brand system',
+    copy: 'Voice, CTA defaults, and prompting rules.',
+    icon: Sparkles,
+  },
+  {
+    title: 'Publishing channels',
+    copy: 'Target platforms, UTM defaults, and queue behavior.',
+    icon: Globe2,
+  },
+  {
+    title: 'Governance',
+    copy: 'Approval requirements, webhook rules, and moderation control.',
+    icon: ShieldCheck,
+  },
+] as const;
 
 export function SiteSettingsForm({ bundle }: { bundle: SiteBundle }) {
   const router = useRouter();
@@ -57,15 +76,44 @@ export function SiteSettingsForm({ bundle }: { bundle: SiteBundle }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="section-shell">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="eyebrow">Site settings</p>
-          <h2 className="mt-2 text-2xl font-semibold">Brand, platform, and approval rules</h2>
+    <form onSubmit={handleSubmit} className="page-stack">
+      <section className="page-hero">
+        <div className="page-hero-inner">
+          <div className="section-header">
+            <div className="max-w-3xl">
+              <p className="eyebrow">Site settings</p>
+              <h2 className="section-title mt-3">Brand, platform, and approval rules</h2>
+              <p className="section-copy mt-3">
+                Define how this workspace sounds, where it publishes, how image generation should be
+                framed, and what approval guardrails need to exist before scheduling.
+              </p>
+            </div>
+            <Button loading={loading} size="lg">Save changes</Button>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {settingsHighlights.map((item) => {
+              const Glyph = item.icon;
+              return (
+                <div key={item.title} className="data-card">
+                  <Glyph className="h-4 w-4 text-accent" />
+                  <p className="mt-3 text-sm font-semibold text-text-primary">{item.title}</p>
+                  <p className="mt-2 text-sm leading-6 text-text-secondary">{item.copy}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <Button loading={loading}>Save changes</Button>
-      </div>
-      <div className="mt-6 grid gap-4 md:grid-cols-2">
+      </section>
+
+      <section className="section-shell">
+        <div className="section-header">
+          <div>
+            <p className="eyebrow">Identity</p>
+            <h3 className="section-subtitle mt-3">Workspace profile</h3>
+          </div>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
         <Field label="Site name" value={form.name} onChange={(name) => setForm((current) => ({ ...current, name }))} />
         <Field label="Domain" value={form.domain} onChange={(domain) => setForm((current) => ({ ...current, domain }))} />
         <Field
@@ -78,21 +126,34 @@ export function SiteSettingsForm({ bundle }: { bundle: SiteBundle }) {
           value={form.utmCampaign}
           onChange={(utmCampaign) => setForm((current) => ({ ...current, utmCampaign }))}
         />
-      </div>
-      <label className="mt-4 block text-sm font-medium text-text-primary">
-        Brand voice
-        <textarea
-          rows={4}
-          value={form.brandVoice}
-          onChange={(event) => setForm((current) => ({ ...current, brandVoice: event.target.value }))}
-          className="mt-1.5 w-full rounded-2xl border border-input-border bg-input-bg px-3 py-2.5 text-sm"
-        />
-      </label>
-      <div className="mt-4 grid gap-4 md:grid-cols-3">
+        </div>
+        <label className="field-group mt-4">
+          <span className="field-label">Brand voice</span>
+          <textarea
+            rows={4}
+            value={form.brandVoice}
+            onChange={(event) => setForm((current) => ({ ...current, brandVoice: event.target.value }))}
+            className="field-textarea min-h-[148px]"
+          />
+        </label>
+      </section>
+
+      <section className="section-shell">
+        <div className="section-header">
+          <div>
+            <p className="eyebrow">Channel strategy</p>
+            <h3 className="section-subtitle mt-3">Platforms and posting controls</h3>
+          </div>
+          <div className="toolbar-chip">
+            <Megaphone className="h-4 w-4 text-accent" />
+            {form.targetPlatforms.length} platform selections
+          </div>
+        </div>
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
         {platformOptions.map((platform) => {
           const checked = form.targetPlatforms.includes(platform);
           return (
-            <label key={platform} className="flex items-center gap-3 rounded-2xl border border-border/70 bg-surface-raised/60 px-4 py-3 text-sm">
+            <label key={platform} className="group flex items-center gap-3 rounded-[22px] border border-border/70 bg-surface-raised/60 px-4 py-3 text-sm text-text-secondary transition-all hover:border-accent/20">
               <input
                 type="checkbox"
                 checked={checked}
@@ -104,13 +165,17 @@ export function SiteSettingsForm({ bundle }: { bundle: SiteBundle }) {
                       : current.targetPlatforms.filter((item) => item !== platform),
                   }))
                 }
+                className="sr-only"
               />
-              <span>{platform.replace(/_/g, ' ')}</span>
+              <span className={`flex h-10 w-10 items-center justify-center rounded-2xl border ${checked ? 'border-accent/20 bg-accent/10 text-accent' : 'border-border/70 bg-surface text-text-muted'}`}>
+                {checked ? <Check className="h-4 w-4" /> : <span className="h-2 w-2 rounded-full bg-current" />}
+              </span>
+              <span className={`font-medium capitalize ${checked ? 'text-text-primary' : ''}`}>{platform.replace(/_/g, ' ')}</span>
             </label>
           );
         })}
-      </div>
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+        </div>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
         <Textarea
           label="Posting rules"
           value={form.postingRules}
@@ -121,8 +186,17 @@ export function SiteSettingsForm({ bundle }: { bundle: SiteBundle }) {
           value={form.ctaDefaults}
           onChange={(ctaDefaults) => setForm((current) => ({ ...current, ctaDefaults }))}
         />
-      </div>
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+        </div>
+      </section>
+
+      <section className="section-shell">
+        <div className="section-header">
+          <div>
+            <p className="eyebrow">Prompts and governance</p>
+            <h3 className="section-subtitle mt-3">Prompt defaults and approval rules</h3>
+          </div>
+        </div>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
         <Field
           label="Default hashtags"
           value={form.defaultHashtags}
@@ -134,20 +208,21 @@ export function SiteSettingsForm({ bundle }: { bundle: SiteBundle }) {
           onChange={(webhookSecret) => setForm((current) => ({ ...current, webhookSecret }))}
           placeholder="Optional site-specific secret"
         />
-      </div>
-      <Textarea
-        label="Image prompt template"
-        value={form.imageStylePrompt}
-        onChange={(imageStylePrompt) => setForm((current) => ({ ...current, imageStylePrompt }))}
-      />
-      <label className="mt-4 inline-flex items-center gap-3 rounded-2xl border border-border/70 bg-surface-raised/60 px-4 py-3 text-sm font-medium">
+        </div>
+        <Textarea
+          label="Image prompt template"
+          value={form.imageStylePrompt}
+          onChange={(imageStylePrompt) => setForm((current) => ({ ...current, imageStylePrompt }))}
+        />
+        <label className="mt-4 inline-flex items-center gap-3 rounded-[22px] border border-border/70 bg-surface-raised/60 px-4 py-3 text-sm font-medium">
         <input
           type="checkbox"
           checked={form.approvalRequired}
           onChange={(event) => setForm((current) => ({ ...current, approvalRequired: event.target.checked }))}
         />
         Require approval before scheduling/publishing
-      </label>
+        </label>
+      </section>
     </form>
   );
 }
@@ -164,13 +239,13 @@ function Field({
   placeholder?: string;
 }) {
   return (
-    <label className="text-sm font-medium text-text-primary">
-      {label}
+    <label className="field-group">
+      <span className="field-label">{label}</span>
       <input
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="mt-1.5 w-full rounded-2xl border border-input-border bg-input-bg px-3 py-2.5 text-sm"
+        className="field-input"
       />
     </label>
   );
@@ -186,13 +261,13 @@ function Textarea({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="mt-4 block text-sm font-medium text-text-primary">
-      {label}
+    <label className="field-group mt-4">
+      <span className="field-label">{label}</span>
       <textarea
         rows={5}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1.5 w-full rounded-2xl border border-input-border bg-input-bg px-3 py-2.5 text-sm"
+        className="field-textarea"
       />
     </label>
   );

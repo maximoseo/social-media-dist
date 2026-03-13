@@ -107,13 +107,16 @@ export function ScheduleVariantForm({
   const [scheduledFor, setScheduledFor] = useState('');
 
   return (
-    <div className="mt-4 flex flex-wrap items-center gap-3">
-      <input
-        type="datetime-local"
-        value={scheduledFor}
-        onChange={(event) => setScheduledFor(event.target.value)}
-        className="rounded-2xl border border-input-border bg-input-bg px-3 py-2 text-sm"
-      />
+    <div className="mt-4 flex flex-wrap items-end gap-3">
+      <label className="field-group min-w-[220px]">
+        <span className="field-help">Schedule time</span>
+        <input
+          type="datetime-local"
+          value={scheduledFor}
+          onChange={(event) => setScheduledFor(event.target.value)}
+          className="field-input"
+        />
+      </label>
       <Button
         size="sm"
         loading={loading}
@@ -169,6 +172,7 @@ export function PublishSelectionButton({
       variant={mode === 'publish_now' ? 'primary' : 'secondary'}
       loading={loading}
       disabled={!entryIds.length}
+      size="lg"
       onClick={async () => {
         setLoading(true);
         const response = await fetch(`/api/sites/${siteId}/publish`, {
@@ -212,6 +216,7 @@ export function SyncGoogleSheetsButton({
       variant="ghost"
       loading={loading}
       disabled={!entryIds.length}
+      size="lg"
       onClick={async () => {
         setLoading(true);
         const response = await fetch(`/api/sites/${siteId}/sync/google-sheets`, {

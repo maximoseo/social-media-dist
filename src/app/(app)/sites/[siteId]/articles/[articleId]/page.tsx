@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { ImagePlus, Link2, ListChecks, Tags } from 'lucide-react';
 import { Card } from '@/components/ui';
 import {
   GenerateAssetButton,
@@ -27,28 +28,41 @@ export default async function ArticleDetailPage({
   const defaultSocialAccountId = bundle.socialAccounts[0]?.id ?? null;
 
   return (
-    <div className="flex flex-col gap-6">
-      <section className="section-shell">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div className="max-w-3xl">
-            <p className="eyebrow">Article detail</p>
-            <h1 className="mt-2 text-3xl font-semibold">{detail.article.title}</h1>
-            <p className="mt-4 text-sm text-text-secondary">{detail.article.excerpt ?? 'No excerpt stored.'}</p>
+    <div className="page-stack">
+      <section className="page-hero">
+        <div className="page-hero-inner">
+          <div className="section-header">
+            <div className="max-w-3xl">
+              <p className="eyebrow">Article detail</p>
+              <h1 className="section-title mt-3">{detail.article.title}</h1>
+              <p className="mt-4 text-sm leading-6 text-text-secondary">
+                {detail.article.excerpt ?? 'No excerpt stored.'}
+              </p>
+            </div>
+            <GenerateDraftsButton siteId={params.siteId} articleId={params.articleId} />
           </div>
-          <GenerateDraftsButton siteId={params.siteId} articleId={params.articleId} />
-        </div>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          <div className="rounded-2xl bg-surface-raised/70 px-4 py-3">
+          <div className="grid gap-4 md:grid-cols-3">
+          <div className="data-card">
             <p className="text-xs uppercase tracking-[0.22em] text-text-muted">URL</p>
-            <p className="mt-2 text-sm text-text-primary">{detail.article.url}</p>
+            <div className="mt-3 flex items-start gap-3">
+              <Link2 className="mt-0.5 h-4 w-4 text-accent" />
+              <p className="text-sm leading-6 text-text-primary">{detail.article.url}</p>
+            </div>
           </div>
-          <div className="rounded-2xl bg-surface-raised/70 px-4 py-3">
+          <div className="data-card">
             <p className="text-xs uppercase tracking-[0.22em] text-text-muted">Category</p>
-            <p className="mt-2 text-sm text-text-primary">{detail.article.category ?? 'Uncategorized'}</p>
+            <div className="mt-3 flex items-center gap-3">
+              <ListChecks className="h-4 w-4 text-accent" />
+              <p className="text-sm text-text-primary">{detail.article.category ?? 'Uncategorized'}</p>
+            </div>
           </div>
-          <div className="rounded-2xl bg-surface-raised/70 px-4 py-3">
+          <div className="data-card">
             <p className="text-xs uppercase tracking-[0.22em] text-text-muted">Keywords</p>
-            <p className="mt-2 text-sm text-text-primary">{detail.article.keywords.join(', ') || 'None'}</p>
+            <div className="mt-3 flex items-start gap-3">
+              <Tags className="mt-0.5 h-4 w-4 text-accent" />
+              <p className="text-sm leading-6 text-text-primary">{detail.article.keywords.join(', ') || 'None'}</p>
+            </div>
+          </div>
           </div>
         </div>
       </section>
@@ -56,11 +70,11 @@ export default async function ArticleDetailPage({
       <section className="space-y-4">
         {detail.drafts.length ? (
           detail.drafts.map((draft) => (
-            <Card key={draft.id} className="rounded-3xl border-border/70">
-              <div className="flex items-center justify-between gap-4">
+            <Card key={draft.id} className="rounded-[30px] border-border/70">
+              <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
                   <p className="eyebrow">Draft bundle</p>
-                  <h2 className="mt-2 text-xl font-semibold">
+                  <h2 className="mt-3 text-2xl font-semibold tracking-tight">
                     {draft.generation_provider} · {draft.generation_model}
                   </h2>
                 </div>
@@ -72,7 +86,7 @@ export default async function ArticleDetailPage({
 
               <div className="mt-6 grid gap-4 xl:grid-cols-2">
                 {draft.variants.map((variant) => (
-                  <div key={variant.id} className="rounded-3xl border border-border/70 bg-surface-raised/60 p-5">
+                  <div key={variant.id} className="rounded-[28px] border border-border/70 bg-surface-raised/60 p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <p className="text-sm font-semibold capitalize">{variant.platform.replace(/_/g, ' ')}</p>
@@ -83,6 +97,10 @@ export default async function ArticleDetailPage({
                     <VariantEditor siteId={params.siteId} variant={variant} />
                     <div className="mt-4 flex flex-wrap items-center gap-3">
                       <GenerateAssetButton siteId={params.siteId} draftId={draft.id} variantId={variant.id} />
+                      <div className="toolbar-chip">
+                        <ImagePlus className="h-4 w-4 text-accent" />
+                        Asset workflow
+                      </div>
                     </div>
                     <ScheduleVariantForm
                       siteId={params.siteId}
@@ -99,12 +117,12 @@ export default async function ArticleDetailPage({
               {!!draft.assets.length && (
                 <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                   {draft.assets.map((asset) => (
-                    <div key={asset.id} className="rounded-2xl border border-border/70 bg-surface p-3">
+                    <div key={asset.id} className="rounded-[24px] border border-border/70 bg-surface p-3">
                       {asset.public_url ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={asset.public_url} alt="Generated asset" className="h-48 w-full rounded-2xl object-cover" />
+                        <img src={asset.public_url} alt="Generated asset" className="h-56 w-full rounded-[20px] object-cover" />
                       ) : (
-                        <div className="flex h-48 items-center justify-center rounded-2xl bg-surface-raised text-sm text-text-secondary">
+                        <div className="flex h-56 items-center justify-center rounded-[20px] bg-surface-raised text-sm text-text-secondary">
                           Asset pending
                         </div>
                       )}

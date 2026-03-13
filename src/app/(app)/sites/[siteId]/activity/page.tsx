@@ -15,14 +15,21 @@ export default async function SiteActivityPage({ params }: { params: { siteId: s
 
   return (
     <section className="section-shell">
-      <div>
-        <p className="eyebrow">Activity log</p>
-        <h1 className="mt-2 text-3xl font-semibold">{bundle.site.name} operational log</h1>
+      <div className="section-header">
+        <div>
+          <p className="eyebrow">Activity log</p>
+          <h1 className="section-title mt-3">{bundle.site.name} operational log</h1>
+          <p className="section-copy mt-3">
+            Review application-side events tied to article intake, draft updates, publish activity,
+            sync status, and retries for this workspace.
+          </p>
+        </div>
+        <div className="toolbar-chip">{activity.length} recorded events</div>
       </div>
       <div className="mt-6 space-y-3">
         {activity.length ? (
           activity.map((item) => (
-            <Card key={item.id} className="rounded-3xl border-border/70">
+            <Card key={item.id} className="rounded-[28px] border-border/70">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-sm font-semibold">{item.message}</p>

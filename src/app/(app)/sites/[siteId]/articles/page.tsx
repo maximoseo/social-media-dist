@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui';
 import { ManualArticleImportForm } from '@/components/social/ManualArticleImportForm';
 import { StatusBadge } from '@/components/social/StatusBadge';
@@ -16,29 +17,47 @@ export default async function SiteArticlesPage({ params }: { params: { siteId: s
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="page-stack">
       <ManualArticleImportForm siteId={params.siteId} />
 
       <section className="section-shell">
-        <div className="flex items-start justify-between gap-4">
+        <div className="section-header">
           <div>
             <p className="eyebrow">Imported articles</p>
-            <h2 className="mt-2 text-2xl font-semibold">{bundle.site.name} article queue</h2>
+            <h2 className="section-subtitle mt-3">{bundle.site.name} article queue</h2>
+            <p className="section-copy mt-3">
+              Review what has already landed inside this site workspace, then open an article to
+              generate variants, edit messaging, create images, and move approved posts onto the calendar.
+            </p>
           </div>
+          <div className="toolbar-chip">{articles.length} articles in queue</div>
         </div>
 
         <div className="mt-6 space-y-3">
           {articles.length ? (
             articles.map((article) => (
               <Link key={article.id} href={`/sites/${params.siteId}/articles/${article.id}`} className="block">
-                <Card className="rounded-3xl border-border/70 transition-colors hover:border-accent/40">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-lg font-semibold">{article.title}</p>
-                      <p className="mt-2 text-sm text-text-secondary">{article.excerpt ?? 'No excerpt available.'}</p>
-                      <p className="mt-3 text-xs text-text-muted">{formatRelative(article.created_at)}</p>
+                <Card className="rounded-[28px] border-border/70 transition-all hover:-translate-y-0.5 hover:border-accent/30">
+                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="max-w-3xl">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="toolbar-chip">Article</span>
+                        <span className="text-xs font-medium uppercase tracking-[0.18em] text-text-muted">
+                          {formatRelative(article.created_at)}
+                        </span>
+                      </div>
+                      <p className="mt-4 text-xl font-semibold tracking-tight">{article.title}</p>
+                      <p className="mt-3 text-sm leading-6 text-text-secondary">
+                        {article.excerpt ?? 'No excerpt available.'}
+                      </p>
                     </div>
-                    <StatusBadge status={article.status} />
+                    <div className="flex flex-col items-start gap-3 lg:items-end">
+                      <StatusBadge status={article.status} />
+                      <span className="inline-flex items-center gap-2 text-sm font-medium text-accent">
+                        Open article
+                        <ArrowRight className="h-4 w-4" />
+                      </span>
+                    </div>
                   </div>
                 </Card>
               </Link>
