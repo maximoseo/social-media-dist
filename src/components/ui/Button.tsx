@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
@@ -10,16 +11,20 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles = {
-  primary: 'bg-accent hover:bg-accent-hover text-accent-foreground',
-  secondary: 'bg-surface-raised hover:bg-border text-text-primary',
-  ghost: 'text-text-secondary hover:text-text-primary hover:bg-surface-raised',
-  danger: 'text-destructive hover:opacity-80 hover:bg-destructive/10',
+  primary:
+    'border border-accent/30 bg-[linear-gradient(135deg,hsl(var(--accent)),hsl(var(--accent-hover)))] text-accent-foreground shadow-[0_18px_40px_-22px_rgba(14,165,233,0.75)] hover:-translate-y-0.5 hover:brightness-105',
+  secondary:
+    'border border-border/80 bg-surface-raised/80 text-text-primary hover:-translate-y-0.5 hover:border-accent/20 hover:bg-surface',
+  ghost:
+    'border border-transparent bg-transparent text-text-secondary hover:border-border/70 hover:bg-surface-raised/70 hover:text-text-primary',
+  danger:
+    'border border-destructive/30 bg-destructive/10 text-destructive hover:-translate-y-0.5 hover:bg-destructive/15',
 };
 
 const sizeStyles = {
-  sm: 'px-3 py-1.5 text-xs',
-  md: 'px-4 py-2 text-body-sm',
-  lg: 'px-5 py-2.5 text-body',
+  sm: 'min-h-[40px] px-3.5 py-2 text-xs',
+  md: 'min-h-[44px] px-4.5 py-2.5 text-body-sm',
+  lg: 'min-h-[48px] px-5.5 py-3 text-body',
 };
 
 function Spinner() {
@@ -37,14 +42,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         disabled={disabled || loading}
-        className={`
-          inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-colors
-          min-h-[44px] sm:min-h-0
-          disabled:opacity-50 disabled:cursor-not-allowed
-          ${variantStyles[variant]}
-          ${sizeStyles[size]}
-          ${className}
-        `}
+        className={cn(
+          'inline-flex items-center justify-center gap-2 rounded-2xl font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
+          sizeStyles[size],
+          variantStyles[variant],
+          className,
+        )}
         {...props}
       >
         {loading ? <Spinner /> : icon}

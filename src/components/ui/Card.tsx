@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils';
+
 interface CardProps {
   children: React.ReactNode;
   className?: string;
@@ -13,7 +15,13 @@ const paddingMap = {
 
 export default function Card({ children, className = '', padding = 'md' }: CardProps) {
   return (
-    <div className={`border border-border rounded-xl bg-surface ${paddingMap[padding]} ${className}`}>
+    <div
+      className={cn(
+        'relative isolate overflow-hidden rounded-[26px] border border-border/80 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.94)] shadow-[0_32px_90px_-52px_rgba(0,0,0,0.85)] backdrop-blur-sm before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/10',
+        paddingMap[padding],
+        className,
+      )}
+    >
       {children}
     </div>
   );

@@ -10,13 +10,13 @@ export default function ThemeToggle() {
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return <div className="w-9 h-9 rounded-lg" />;
+    return <div className="h-11 w-11 rounded-2xl border border-border/60 bg-surface-raised/60" />;
   }
 
   return (
     <button
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-raised transition-colors"
+      className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-border/70 bg-surface-raised/70 text-text-secondary transition-all hover:-translate-y-0.5 hover:border-accent/35 hover:bg-surface hover:text-text-primary"
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
     >
       {theme === 'dark' ? (

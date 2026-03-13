@@ -2,8 +2,13 @@
 
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { BadgeCheck, Bot, Clock3, Globe2 } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { useToast } from '@/components/Toast';
+import { cn } from '@/lib/utils';
+
+const inputClassName =
+  'mt-2 w-full rounded-2xl border border-input-border/90 bg-input-bg/80 px-4 py-3 text-sm text-text-primary outline-none ring-0 transition-all placeholder:text-text-muted/80 focus:border-input-focus focus:bg-surface focus:shadow-[0_0_0_4px_hsl(var(--accent)_/_0.12)]';
 
 export function CreateWorkspaceForm() {
   const router = useRouter();
@@ -49,53 +54,98 @@ export function CreateWorkspaceForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-4 rounded-3xl border border-border/70 bg-surface/90 p-5">
-      <div>
-        <p className="eyebrow">Create workspace</p>
-        <h2 className="mt-2 text-xl font-semibold">Add a new site or brand</h2>
+    <form
+      id="create-workspace"
+      onSubmit={handleSubmit}
+      className="grid gap-6 rounded-[30px] border border-border/70 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.95)] p-6 sm:p-7"
+    >
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        <div className="max-w-xl">
+          <p className="eyebrow">Create workspace</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-[1.9rem]">
+            Add a new site or brand with operational defaults built in
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-text-secondary">
+            This creates the protected workspace shell, publishing profile, and brand context used by
+            article intake, draft generation, calendar scheduling, and channel sync.
+          </p>
+        </div>
+        <div className="grid gap-2 sm:grid-cols-3 lg:w-[360px] lg:grid-cols-1">
+          {[
+            { label: 'n8n intake ready', icon: Bot },
+            { label: 'Timezone aware', icon: Clock3 },
+            { label: 'Approval capable', icon: BadgeCheck },
+          ].map((item) => (
+            <div
+              key={item.label}
+              className="flex items-center gap-3 rounded-2xl border border-border/70 bg-surface-raised/65 px-4 py-3 text-sm text-text-secondary"
+            >
+              <item.icon className="h-4 w-4 text-accent" />
+              {item.label}
+            </div>
+          ))}
+        </div>
       </div>
+
       <div className="grid gap-4 md:grid-cols-2">
         <Input
           label="Organization"
+          description="Owning client, business group, or internal org."
           value={form.organizationName}
           onChange={(value) => setForm((current) => ({ ...current, organizationName: value }))}
           placeholder="Maximo SEO"
         />
         <Input
           label="Site name"
+          description="The brand or site label shown across the dashboard."
           value={form.siteName}
           onChange={(value) => setForm((current) => ({ ...current, siteName: value }))}
           placeholder="HTML Improvement"
         />
       </div>
-      <Input
-        label="Domain"
-        value={form.domain}
-        onChange={(value) => setForm((current) => ({ ...current, domain: value }))}
-        placeholder="https://example.com"
-      />
-      <div className="grid gap-4 md:grid-cols-[220px_1fr]">
+
+      <div className="grid gap-4 md:grid-cols-[1.1fr_0.9fr]">
+        <Input
+          label="Domain"
+          description="Canonical site URL used for article source matching and UTM defaults."
+          value={form.domain}
+          onChange={(value) => setForm((current) => ({ ...current, domain: value }))}
+          placeholder="https://example.com"
+          icon={<Globe2 className="h-4 w-4" />}
+        />
         <Input
           label="Timezone"
+          description="Base timezone for scheduling, calendar defaults, and publish windows."
           value={form.timezone}
           onChange={(value) => setForm((current) => ({ ...current, timezone: value }))}
           placeholder="America/Chicago"
         />
-        <label className="text-sm font-medium text-text-primary">
-          Brand voice
-          <textarea
-            value={form.brandVoice}
-            onChange={(event) =>
-              setForm((current) => ({ ...current, brandVoice: event.target.value }))
-            }
-            rows={4}
-            placeholder="Direct, practical, and premium. Avoid hype and anchor every post to tangible value."
-            className="mt-1.5 w-full rounded-2xl border border-input-border bg-input-bg px-3 py-2.5 text-sm text-text-primary outline-none ring-0 transition-colors focus:border-input-focus"
-          />
-        </label>
       </div>
-      <div className="flex justify-end">
-        <Button loading={loading}>Create workspace</Button>
+
+      <label className="text-sm font-medium text-text-primary">
+        Brand voice
+        <p className="mt-1 text-xs leading-5 text-text-muted">
+          Give the generator tone constraints, messaging guardrails, and what to avoid.
+        </p>
+        <textarea
+          value={form.brandVoice}
+          onChange={(event) =>
+            setForm((current) => ({ ...current, brandVoice: event.target.value }))
+          }
+          rows={5}
+          placeholder="Direct, practical, and premium. Avoid hype. Anchor every post to tangible value and keep CTAs clear."
+          className={cn(inputClassName, 'min-h-[148px] resize-y')}
+        />
+      </label>
+
+      <div className="flex flex-col gap-4 border-t border-border/70 pt-5 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-text-secondary">
+          The new workspace will appear in the dashboard immediately and inherit secure server-side
+          integrations.
+        </p>
+        <Button loading={loading} size="lg">
+          Create workspace
+        </Button>
       </div>
     </form>
   );
@@ -103,24 +153,36 @@ export function CreateWorkspaceForm() {
 
 function Input({
   label,
+  description,
   value,
   onChange,
   placeholder,
+  icon,
 }: {
   label: string;
+  description?: string;
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
+  icon?: React.ReactNode;
 }) {
   return (
     <label className="text-sm font-medium text-text-primary">
       {label}
-      <input
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        placeholder={placeholder}
-        className="mt-1.5 w-full rounded-2xl border border-input-border bg-input-bg px-3 py-2.5 text-sm text-text-primary outline-none ring-0 transition-colors focus:border-input-focus"
-      />
+      {description ? <p className="mt-1 text-xs leading-5 text-text-muted">{description}</p> : null}
+      <div className="relative">
+        {icon ? (
+          <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-text-muted">
+            {icon}
+          </span>
+        ) : null}
+        <input
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
+          className={cn(inputClassName, icon ? 'pl-11' : '')}
+        />
+      </div>
     </label>
   );
 }
