@@ -1,17 +1,18 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import { hasBrowserSupabaseConfig } from '@/lib/social/env';
+import { getSupabasePublicConfigStatus } from '@/lib/social/env';
 
 export function createServerSupabaseClient() {
-  if (!hasBrowserSupabaseConfig()) {
+  const config = getSupabasePublicConfigStatus();
+  if (!config.configured) {
     return null;
   }
 
   const cookieStore = cookies();
 
   return createServerClient<any>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    config.supabaseUrl,
+    config.supabaseAnonKey,
     {
       cookies: {
         getAll() {

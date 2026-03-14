@@ -21,6 +21,5 @@ export default async function LoginPage({
   if (user) {
     redirect(redirectTo);
   }
-
   return <AuthForm mode="login" redirectTo={redirectTo} />;
 }

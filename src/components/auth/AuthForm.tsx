@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui';
-import { hasBrowserSupabaseConfig } from '@/lib/social/env';
+import { getSupabasePublicConfigStatus } from '@/lib/social/env';
 
 interface AuthFormProps {
   mode: 'login' | 'register';
@@ -15,7 +15,8 @@ interface AuthFormProps {
 export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
   const router = useRouter();
   const { signIn, signUp, isAuthenticated } = useAuth();
-  const isSupabaseConfigured = hasBrowserSupabaseConfig();
+  const supabaseConfig = getSupabasePublicConfigStatus();
+  const isSupabaseConfigured = supabaseConfig.configured;
   const targetPath = redirectTo || '/dashboard';
   const redirectQuery = redirectTo ? `?redirect=${encodeURIComponent(targetPath)}` : '';
   const [email, setEmail] = useState('');
@@ -73,6 +74,12 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
     }
   }, [shouldRedirect, isAuthenticated, mode, router, targetPath]);
 
+  useEffect(() => {
+    if (mode === 'login' && isAuthenticated && !shouldRedirect) {
+      router.replace(redirectTo || '/dashboard');
+    }
+  }, [isAuthenticated, mode, redirectTo, router, shouldRedirect]);
+
   return (
     <div className="w-full max-w-[520px] mx-auto">
       <div className="rounded-[32px] border border-border/80 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.96)] p-7 shadow-[0_40px_120px_-64px_rgba(0,0,0,0.9)] sm:p-8">
@@ -90,7 +97,14 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
 
         {!isSupabaseConfigured && (
           <div className="mb-4 rounded-[22px] border border-warning/25 bg-warning/[0.12] px-4 py-3 text-body text-warning">
-            Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to enable auth.
+            <p className="font-medium">Authentication is unavailable because Supabase is not configured.</p>
+            {!!supabaseConfig.missing.length && (
+              <p className="mt-2">Missing: {supabaseConfig.missing.join(', ')}</p>
+            )}
+            {!!supabaseConfig.invalid.length && (
+              <p className="mt-1">Invalid: {supabaseConfig.invalid.join(', ')}</p>
+            )}
+            <p className="mt-2">Set required auth env variables and redeploy.</p>
           </div>
         )}
 

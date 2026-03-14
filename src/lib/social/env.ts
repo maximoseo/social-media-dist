@@ -15,21 +15,63 @@ const SERVER_ENV_KEYS = [
   'AI_MODEL',
 ] as const;
 
+export type SupabasePublicConfigStatus = {
+  configured: boolean;
+  missing: string[];
+  invalid: string[];
+  supabaseUrl: string;
+  supabaseAnonKey: string;
+};
+
 export function getPublicEnv() {
   return {
-    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
-    supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() ?? '',
+    supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim() ?? '',
     appUrl: process.env.NEXT_PUBLIC_APP_URL ?? '',
   };
 }
 
-export function hasBrowserSupabaseConfig() {
+export function getSupabasePublicConfigStatus(): SupabasePublicConfigStatus {
   const env = getPublicEnv();
-  return Boolean(env.supabaseUrl && env.supabaseAnonKey);
+  const missing: string[] = [];
+  const invalid: string[] = [];
+
+  if (!env.supabaseUrl) {
+    missing.push('NEXT_PUBLIC_SUPABASE_URL');
+  }
+
+  if (!env.supabaseAnonKey) {
+    missing.push('NEXT_PUBLIC_SUPABASE_ANON_KEY');
+  }
+
+  if (env.supabaseUrl) {
+    try {
+      new URL(env.supabaseUrl);
+    } catch {
+      invalid.push('NEXT_PUBLIC_SUPABASE_URL');
+    }
+  }
+
+  if (env.supabaseAnonKey && env.supabaseAnonKey.length < 20) {
+    invalid.push('NEXT_PUBLIC_SUPABASE_ANON_KEY');
+  }
+
+  return {
+    configured: missing.length === 0 && invalid.length === 0,
+    missing,
+    invalid,
+    supabaseUrl: env.supabaseUrl,
+    supabaseAnonKey: env.supabaseAnonKey,
+  };
+}
+
+export function hasBrowserSupabaseConfig() {
+  return getSupabasePublicConfigStatus().configured;
 }
 
 export function hasServiceRoleConfig() {
-  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ?? '';
+  return hasBrowserSupabaseConfig() && serviceRoleKey.length > 20;
 }
 
 export function getEnabledIntegrations() {
