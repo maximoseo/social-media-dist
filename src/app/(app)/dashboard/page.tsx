@@ -43,7 +43,10 @@ export default async function DashboardPage() {
               </div>
               <div className="mt-5 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-3xl">
-                  <h2 className="text-3xl font-semibold tracking-tight sm:text-[2.2rem]">
+                  <p className="text-lg text-text-secondary">
+                    {new Date().getHours() < 12 ? 'Good morning' : new Date().getHours() < 17 ? 'Good afternoon' : 'Good evening'}
+                  </p>
+                  <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-[2.2rem]">
                     Manage multi-site social distribution from one operational dashboard.
                   </h2>
                   <p className="mt-4 max-w-2xl text-sm leading-6 text-text-secondary sm:text-base">
@@ -128,7 +131,7 @@ export default async function DashboardPage() {
         </Card>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-4">
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           label="Workspaces"
           value={workspaces.length}
@@ -159,7 +162,7 @@ export default async function DashboardPage() {
         />
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+      <section id="create-workspace-section" className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
         <CreateWorkspaceForm />
 
         <Card className="rounded-[30px] border-border/70">
@@ -220,8 +223,8 @@ export default async function DashboardPage() {
                 <Card className="h-full rounded-[30px] border-border/70 transition-all hover:-translate-y-1 hover:border-accent/30">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-lg font-semibold">{workspace.site.name}</p>
-                      <p className="mt-1 text-sm text-text-secondary">{workspace.site.domain}</p>
+                      <p className="text-lg font-semibold tracking-tight">{workspace.site.name}</p>
+                      <p className="mt-1 text-sm text-text-muted">{workspace.site.domain}</p>
                     </div>
                     <StatusBadge status={workspace.site.status} />
                   </div>

@@ -106,7 +106,7 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {mode === 'register' && (
             <div className="field-group">
               <label className="field-label">Display Name</label>

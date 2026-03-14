@@ -59,7 +59,7 @@ export function AppShell({
 
   return (
     <div className="flex min-h-screen bg-transparent">
-      <aside className="hidden w-[318px] shrink-0 flex-col border-r border-white/5 bg-sidebar-bg px-5 py-5 text-sidebar-text lg:flex">
+      <aside className="hidden w-[318px] shrink-0 flex-col border-r border-white/5 bg-sidebar-bg px-5 py-5 text-sidebar-text lg:flex before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-accent/40 before:to-transparent relative">
         <Link
           href="/dashboard"
           className="rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] px-5 py-5 shadow-[0_30px_80px_-55px_rgba(14,165,233,0.8)] backdrop-blur"
@@ -91,21 +91,36 @@ export function AppShell({
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/38">Navigation</p>
         </div>
 
-        <nav className="mt-3 space-y-2">
+        <nav className="mt-3 space-y-1">
           <SidebarLink href="/dashboard" active={isLinkActive(pathname, '/dashboard')} icon={LayoutDashboard}>
             Workspaces
           </SidebarLink>
-          {currentSite &&
-            siteIcons.map((item) => (
-              <SidebarLink
-                key={item.label}
-                href={`/sites/${currentSite.id}${item.suffix}`}
-                active={isLinkActive(pathname, `/sites/${currentSite.id}${item.suffix}`)}
-                icon={item.icon}
-              >
-                {item.label}
-              </SidebarLink>
-            ))}
+          {currentSite && (
+            <>
+              <p className="mt-5 px-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/30">Content</p>
+              {siteIcons.slice(0, 2).map((item) => (
+                <SidebarLink
+                  key={item.label}
+                  href={`/sites/${currentSite.id}${item.suffix}`}
+                  active={isLinkActive(pathname, `/sites/${currentSite.id}${item.suffix}`)}
+                  icon={item.icon}
+                >
+                  {item.label}
+                </SidebarLink>
+              ))}
+              <p className="mt-5 px-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/30">Operations</p>
+              {siteIcons.slice(2).map((item) => (
+                <SidebarLink
+                  key={item.label}
+                  href={`/sites/${currentSite.id}${item.suffix}`}
+                  active={isLinkActive(pathname, `/sites/${currentSite.id}${item.suffix}`)}
+                  icon={item.icon}
+                >
+                  {item.label}
+                </SidebarLink>
+              ))}
+            </>
+          )}
         </nav>
 
         {currentSite ? (

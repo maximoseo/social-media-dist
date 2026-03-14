@@ -79,13 +79,18 @@ export default async function SiteOverviewPage({ params }: { params: { siteId: s
         <Card className="rounded-[30px] border-border/70">
           <p className="eyebrow">Current rules</p>
           <h3 className="section-subtitle mt-3">Operational configuration snapshot</h3>
-          <div className="mt-6 space-y-3 text-sm text-text-secondary">
-            <div className="data-card">
-              Platforms: {(bundle.settings?.target_platforms ?? []).map((item) => item.replace(/_/g, ' ')).join(', ') || 'Not configured'}
-            </div>
-            <div className="data-card">Timezone: {bundle.settings?.timezone ?? bundle.site.timezone}</div>
-            <div className="data-card">Approval required: {bundle.settings?.approval_required ? 'Yes' : 'No'}</div>
-            <div className="data-card">Hashtags: {(bundle.settings?.default_hashtags ?? []).join(', ') || 'None configured'}</div>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 text-sm">
+            {[
+              { label: 'Platforms', value: (bundle.settings?.target_platforms ?? []).map((item: string) => item.replace(/_/g, ' ')).join(', ') || 'Not configured' },
+              { label: 'Timezone', value: bundle.settings?.timezone ?? bundle.site.timezone },
+              { label: 'Approval required', value: bundle.settings?.approval_required ? 'Yes' : 'No' },
+              { label: 'Hashtags', value: (bundle.settings?.default_hashtags ?? []).join(', ') || 'None configured' },
+            ].map((item) => (
+              <div key={item.label} className="data-card">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-text-muted">{item.label}</p>
+                <p className="mt-2 text-sm font-medium text-text-primary capitalize">{item.value}</p>
+              </div>
+            ))}
           </div>
         </Card>
       </section>
@@ -112,11 +117,14 @@ export default async function SiteOverviewPage({ params }: { params: { siteId: s
           <div className="mt-5 space-y-3">
             {overview.upcoming.length ? (
               overview.upcoming.map((entry) => (
-                <div key={entry.id} className="list-card">
+                <div key={entry.id} className="list-card hover:border-accent/25 transition-colors">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-sm font-semibold">{entry.title}</p>
-                      <p className="mt-1 text-xs text-text-secondary">{formatDateTime(entry.scheduled_for)}</p>
+                      <p className="mt-1.5 inline-flex items-center gap-1.5 text-xs text-text-secondary">
+                        <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse-dot" />
+                        {formatDateTime(entry.scheduled_for)}
+                      </p>
                     </div>
                     <StatusBadge status={entry.status} />
                   </div>
@@ -142,12 +150,21 @@ export default async function SiteOverviewPage({ params }: { params: { siteId: s
             {overview.recentActivity.length ? (
               overview.recentActivity.map((activity) => (
                 <div key={activity.id} className="list-card">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-sm font-semibold">{activity.message}</p>
-                      <p className="mt-1 text-xs text-text-secondary">{formatRelative(activity.created_at)}</p>
+                  <div className="flex items-start gap-3">
+                    <span className={`mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full ${
+                      activity.severity === 'error' ? 'bg-destructive' :
+                      activity.severity === 'warning' ? 'bg-warning' :
+                      'bg-success'
+                    }`} />
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-sm font-semibold">{activity.message}</p>
+                          <p className="mt-1 text-xs text-text-secondary">{formatRelative(activity.created_at)}</p>
+                        </div>
+                        <StatusBadge status={activity.severity} />
+                      </div>
                     </div>
-                    <StatusBadge status={activity.severity} />
                   </div>
                 </div>
               ))

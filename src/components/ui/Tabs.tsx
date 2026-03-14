@@ -57,8 +57,8 @@ export default function Tabs({ tabs, activeTab, onChange }: TabsProps) {
             className={cn(
               'relative min-h-tap whitespace-nowrap rounded-[18px] px-4 py-2.5 text-body-sm font-medium transition-all sm:min-h-0',
               activeTab === tab.id
-                ? 'bg-accent/[0.12] text-accent shadow-[inset_0_0_0_1px_hsl(var(--accent)_/_0.16)]'
-                : 'text-tab-inactive hover:bg-surface-raised/50 hover:text-text-primary',
+                ? 'bg-accent/[0.14] text-accent shadow-[inset_0_0_0_1px_hsl(var(--accent)_/_0.2)] font-semibold'
+                : 'text-tab-inactive hover:bg-surface-raised/60 hover:text-text-primary',
             )}
           >
             {tab.label}

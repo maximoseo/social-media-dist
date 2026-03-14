@@ -142,7 +142,7 @@ export function CreateWorkspaceForm() {
         />
       </label>
 
-      <div className="flex flex-col gap-4 border-t border-border/70 pt-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 border-t border-border/70 pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm leading-6 text-text-secondary">
           The new workspace will appear in the dashboard immediately and inherit secure server-side
           integrations.

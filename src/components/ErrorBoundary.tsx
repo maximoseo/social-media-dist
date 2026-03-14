@@ -33,17 +33,10 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Log error to console for debugging
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
-
-    // Update state with error info
     this.setState({
       error,
       errorInfo,
     });
-
-    // Optional: Send error to error tracking service
-    // trackError(error, errorInfo);
   }
 
   handleReset = () => {
@@ -120,15 +113,7 @@ export default class ErrorBoundary extends Component<Props, State> {
  */
 export function useErrorHandler() {
   return (error: Error) => {
-    // Log the error
-    console.error('Caught error:', error);
-
-    // You could also send to error tracking service here
-    // trackError(error);
-
-    // Optionally show toast notification if toast system is available
     if (typeof window !== 'undefined') {
-      // Dispatch custom event that ErrorBoundary could listen to
       window.dispatchEvent(new CustomEvent('react-error', { detail: error }));
     }
   };

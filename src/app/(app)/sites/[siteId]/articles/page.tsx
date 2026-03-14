@@ -63,7 +63,12 @@ export default async function SiteArticlesPage({ params }: { params: { siteId: s
               </Link>
             ))
           ) : (
-            <p className="text-sm text-text-secondary">No articles imported yet.</p>
+            <div className="flex flex-col items-center justify-center rounded-[28px] border border-dashed border-border/80 bg-surface-overlay/60 px-5 py-16 text-center">
+              <p className="text-lg font-semibold tracking-tight text-text-primary">No articles imported yet</p>
+              <p className="mt-2 max-w-md text-sm leading-6 text-text-secondary">
+                Use the manual import form above or configure n8n webhooks to start receiving articles.
+              </p>
+            </div>
           )}
         </div>
       </section>

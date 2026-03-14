@@ -30,6 +30,7 @@ const config: Config = {
           hover: 'hsl(var(--accent-hover))',
           foreground: 'hsl(var(--accent-foreground))',
           muted: 'hsl(var(--accent-muted))',
+          glow: 'hsl(var(--accent-glow))',
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
@@ -87,6 +88,8 @@ const config: Config = {
       animation: {
         'fade-in': 'fadeIn 0.2s ease-out',
         'slide-down': 'slideDown 0.2s ease-out',
+        'slide-up': 'slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+        'shimmer': 'shimmer 2s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -96,6 +99,14 @@ const config: Config = {
         slideDown: {
           '0%': { opacity: '0', transform: 'translateY(-4px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(8px) scale(0.98)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
         },
       },
     },

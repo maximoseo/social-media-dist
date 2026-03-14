@@ -6,6 +6,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           <div className="absolute inset-0 bg-grid opacity-60" />
           <div className="absolute -left-16 top-0 h-48 w-48 rounded-full bg-accent/15 blur-3xl" />
           <div className="absolute bottom-0 right-0 h-56 w-56 rounded-full bg-warning/10 blur-3xl" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
           <div className="page-hero-inner h-full justify-between">
             <div className="max-w-2xl">
               <div className="toolbar-chip w-fit border-accent/20 bg-accent/10 text-accent">
@@ -13,7 +14,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               </div>
               <p className="eyebrow mt-6">Social Distribution Control</p>
               <h1 className="mt-4 text-[2.85rem] font-semibold leading-[1.05] tracking-tight text-text-primary">
-                Operational publishing for every brand, queue, and approval state.
+                Operational publishing for <span className="bg-gradient-to-r from-accent to-info bg-clip-text text-transparent">every brand</span>, queue, and approval state.
               </h1>
               <p className="mt-5 max-w-xl text-base leading-7 text-text-secondary">
                 Receive article payloads from n8n, turn them into channel-ready campaigns, generate
@@ -43,7 +44,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                   ['Generation', 'AI copy variants and KIE asset tasks tied to drafts.'],
                   ['Publishing', 'Publer jobs, retry queues, Sheets sync, and audit trails.'],
                 ].map(([title, copy]) => (
-                  <div key={title} className="panel-muted p-5">
+                  <div key={title} className="panel-muted p-5 transition-all hover:-translate-y-0.5 hover:border-accent/20">
                     <p className="text-sm font-semibold text-text-primary">{title}</p>
                     <p className="mt-3 text-sm leading-6 text-text-secondary">{copy}</p>
                   </div>

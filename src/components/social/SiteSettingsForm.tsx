@@ -111,6 +111,7 @@ export function SiteSettingsForm({ bundle }: { bundle: SiteBundle }) {
           <div>
             <p className="eyebrow">Identity</p>
             <h3 className="section-subtitle mt-3">Workspace profile</h3>
+            <p className="section-copy mt-2">Core identity settings that define how this workspace appears and operates.</p>
           </div>
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -194,6 +195,7 @@ export function SiteSettingsForm({ bundle }: { bundle: SiteBundle }) {
           <div>
             <p className="eyebrow">Prompts and governance</p>
             <h3 className="section-subtitle mt-3">Prompt defaults and approval rules</h3>
+            <p className="section-copy mt-2">Control how AI prompts are framed and what approval steps are required before publishing.</p>
           </div>
         </div>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -214,11 +216,12 @@ export function SiteSettingsForm({ bundle }: { bundle: SiteBundle }) {
           value={form.imageStylePrompt}
           onChange={(imageStylePrompt) => setForm((current) => ({ ...current, imageStylePrompt }))}
         />
-        <label className="mt-4 inline-flex items-center gap-3 rounded-[22px] border border-border/70 bg-surface-raised/60 px-4 py-3 text-sm font-medium">
+        <label className="mt-4 inline-flex cursor-pointer items-center gap-3 rounded-[22px] border border-border/70 bg-surface-raised/60 px-4 py-3.5 text-sm font-medium transition-colors hover:border-accent/20 hover:bg-surface-raised/80">
         <input
           type="checkbox"
           checked={form.approvalRequired}
           onChange={(event) => setForm((current) => ({ ...current, approvalRequired: event.target.checked }))}
+          className="h-4 w-4 rounded border-border accent-accent"
         />
         Require approval before scheduling/publishing
         </label>

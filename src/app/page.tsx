@@ -69,7 +69,7 @@ export default function HomePage() {
               </div>
               <div className="max-w-3xl">
                 <h2 className="text-4xl font-semibold tracking-tight text-text-primary sm:text-[3.6rem] sm:leading-[1.02]">
-                  Ingest articles, generate channel-ready posts, build assets, and publish on a long-range calendar.
+                  Ingest articles, generate <span className="bg-gradient-to-r from-accent to-info bg-clip-text text-transparent">channel-ready posts</span>, build assets, and publish on a long-range calendar.
                 </h2>
                 <p className="mt-5 max-w-2xl text-base leading-7 text-text-secondary sm:text-lg">
                   Designed for n8n-driven article pipelines, multi-brand governance, Publer scheduling,
@@ -86,8 +86,10 @@ export default function HomePage() {
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 {features.map((feature) => (
-                  <div key={feature.title} className="panel-muted p-5">
-                    <feature.icon className="h-5 w-5 text-accent" />
+                  <div key={feature.title} className="panel-muted p-5 transition-all hover:-translate-y-0.5 hover:border-accent/25 hover:shadow-[0_20px_40px_-24px_rgba(0,0,0,0.5)]">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                      <feature.icon className="h-5 w-5" />
+                    </div>
                     <h3 className="mt-4 text-base font-semibold">{feature.title}</h3>
                     <p className="mt-2 text-sm leading-6 text-text-secondary">{feature.copy}</p>
                   </div>
@@ -145,10 +147,11 @@ export default function HomePage() {
                       {key.replace(/([A-Z])/g, ' $1')}
                     </span>
                     <span
-                      className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+                      className={`inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs font-semibold ${
                         enabled ? 'bg-success/15 text-success' : 'bg-warning/15 text-warning'
                       }`}
                     >
+                      <span className={`h-1.5 w-1.5 rounded-full bg-current ${enabled ? 'animate-pulse-dot' : ''}`} />
                       {enabled ? 'Configured' : 'Needs env'}
                     </span>
                   </div>
@@ -157,6 +160,10 @@ export default function HomePage() {
             </Card>
           </div>
         </section>
+
+        <footer className="mt-auto border-t border-border/50 py-6 text-center text-sm text-text-muted">
+          <p>Social Media Dist · Internal publishing workspace · MAXIMO Operations</p>
+        </footer>
       </div>
     </main>
   );

@@ -41,7 +41,7 @@ export function MetricCard({
   const styles = toneStyles[tone];
 
   return (
-    <Card className="rounded-[28px] border-border/70 bg-surface/90">
+    <Card className="rounded-[28px] border-border/70 bg-surface/90 transition-all hover:-translate-y-0.5 hover:border-accent/20">
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="eyebrow">{label}</p>

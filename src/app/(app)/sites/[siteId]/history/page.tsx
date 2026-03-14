@@ -37,7 +37,14 @@ export default async function SiteHistoryPage({ params }: { params: { siteId: st
                   <p className="mt-2 text-xs text-text-secondary">
                     Created {formatDateTime(job.created_at)}{job.external_job_id ? ` · Job ${job.external_job_id}` : ''}
                   </p>
-                  {job.last_error && <p className="mt-3 text-sm text-destructive">{job.last_error}</p>}
+                  {job.last_error && (
+                    <details className="mt-3">
+                      <summary className="cursor-pointer text-sm font-medium text-destructive hover:text-destructive/80">
+                        View error details
+                      </summary>
+                      <p className="mt-2 rounded-2xl border border-destructive/15 bg-destructive/[0.06] px-3 py-2 text-sm text-destructive">{job.last_error}</p>
+                    </details>
+                  )}
                   <div className="mt-4 flex flex-wrap gap-3">
                     <SyncGoogleSheetsButton siteId={params.siteId} entryIds={[job.calendar_entry_id]} />
                     {job.status === 'failed' && (
@@ -54,7 +61,12 @@ export default async function SiteHistoryPage({ params }: { params: { siteId: st
             </Card>
           ))
         ) : (
-          <p className="text-sm text-text-secondary">No publish jobs yet.</p>
+          <div className="flex flex-col items-center justify-center rounded-[28px] border border-dashed border-border/80 bg-surface-overlay/60 px-5 py-16 text-center">
+            <p className="text-lg font-semibold tracking-tight text-text-primary">No publish jobs yet</p>
+            <p className="mt-2 max-w-md text-sm leading-6 text-text-secondary">
+              Schedule content from the calendar page and publish through Publer to see results here.
+            </p>
+          </div>
         )}
       </div>
     </section>
