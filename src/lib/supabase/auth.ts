@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { User } from '@supabase/supabase-js';
 import { createServerClient } from '@supabase/ssr';
-import { hasBrowserSupabaseConfig } from '@/lib/social/env';
+import { getSupabasePublicConfigStatus } from '@/lib/social/env';
 
 function applyCookies(
   response: NextResponse,
@@ -23,13 +23,14 @@ export async function refreshSupabaseSession(request: NextRequest): Promise<{
 }> {
   let response = NextResponse.next({ request });
 
-  if (!hasBrowserSupabaseConfig()) {
+  const config = getSupabasePublicConfigStatus();
+  if (!config.configured) {
     return { response, user: null };
   }
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    config.supabaseUrl,
+    config.supabaseAnonKey,
     {
       cookies: {
         getAll() {

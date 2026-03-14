@@ -255,6 +255,22 @@ If Sheets credentials are missing, the rest of the app still works. Sync routes 
 
 The repository includes [`render.yaml`](/Users/tomermac/social-media-dist/render.yaml) for a Node web service deployment. Keep all secrets in the deploy environment and never commit `.env.local`.
 
+### Auth deployment guardrails (important)
+
+- `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are mandatory for login and protected routes.
+- In `render.yaml`, these are declared with `sync: false`, so Render will **not** auto-populate them from the repo.
+- You must set them manually in Render service environment settings for each environment.
+- If these are missing, the app now fails safely: login is disabled and protected routes redirect to `/auth/login` with setup context.
+
+### Supabase Auth URL settings
+
+Ensure Supabase Auth configuration includes:
+
+- **Site URL**: `https://social.maximo-seo.ai`
+- **Additional Redirect URLs** (if using callback-based flows):
+  - `https://social.maximo-seo.ai/auth/callback`
+  - `http://localhost:3000/auth/callback`
+
 ## Known Assumptions
 
 - Publer account IDs and workspace mappings are stored in `social_accounts`.

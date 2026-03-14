@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
+import { getSupabasePublicConfigStatus } from '@/lib/social/env';
 import { sanitizeRedirectPath } from '@/lib/supabase/auth';
 
 export async function GET(request: NextRequest) {
@@ -11,12 +12,20 @@ export async function GET(request: NextRequest) {
   );
   const redirectUrl = new URL(next, origin);
   const redirectResponse = NextResponse.redirect(redirectUrl);
+  const config = getSupabasePublicConfigStatus();
+
+  if (!config.configured) {
+    const loginUrl = new URL('/auth/login', origin);
+    loginUrl.searchParams.set('authSetup', 'missing-env');
+    loginUrl.searchParams.set('redirect', next);
+    return NextResponse.redirect(loginUrl);
+  }
 
   if (code) {
     try {
       const supabase = createServerClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        config.supabaseUrl,
+        config.supabaseAnonKey,
         {
           cookies: {
             getAll() {
