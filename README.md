@@ -36,7 +36,7 @@ Social Media Dist is a production-oriented internal publishing workspace for mul
 ## Local Development
 
 1. Copy `.env.example` to `.env.local`.
-2. Fill in the required environment variables.
+2. Fill in the required environment variables and register `http://localhost:3000/auth/callback` in Supabase Auth for local sign-in.
 3. Install dependencies with `npm install`.
 4. Run the dev server with `npm run dev`.
 5. Open `http://localhost:3000`.
@@ -58,6 +58,8 @@ npm run build
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
+
+`NEXT_PUBLIC_APP_URL` must match the exact origin of the app in each environment so auth callbacks and protected-route redirects resolve correctly.
 
 ### Draft Generation
 
@@ -93,9 +95,10 @@ npm run build
 
 1. Create a Supabase project.
 2. Set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY`.
-3. Apply `supabase/migrations/001_initial_schema.sql`.
-4. Confirm the `generated-assets` storage bucket exists. The migration creates it as a public bucket.
-5. Enable email/password auth in Supabase Auth.
+3. Add `${NEXT_PUBLIC_APP_URL}/auth/callback` to the Supabase Auth redirect URL allow-list for every environment.
+4. Apply `supabase/migrations/001_initial_schema.sql`.
+5. Confirm the `generated-assets` storage bucket exists. The migration creates it as a public bucket.
+6. Enable email/password auth in Supabase Auth.
 
 ### Schema Coverage
 

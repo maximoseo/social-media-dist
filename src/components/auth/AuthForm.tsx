@@ -16,6 +16,8 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
   const router = useRouter();
   const { signIn, signUp, isAuthenticated } = useAuth();
   const isSupabaseConfigured = hasBrowserSupabaseConfig();
+  const targetPath = redirectTo || '/dashboard';
+  const redirectQuery = redirectTo ? `?redirect=${encodeURIComponent(targetPath)}` : '';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -66,12 +68,10 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
   // Redirect after auth state is synced
   useEffect(() => {
     if (shouldRedirect && isAuthenticated && mode === 'login') {
-      const redirectDelay = setTimeout(() => {
-        router.push(redirectTo || '/templates');
-      }, 800); // Small delay to show success message
-      return () => clearTimeout(redirectDelay);
+      router.replace(targetPath);
+      router.refresh();
     }
-  }, [shouldRedirect, isAuthenticated, mode, router, redirectTo]);
+  }, [shouldRedirect, isAuthenticated, mode, router, targetPath]);
 
   return (
     <div className="w-full max-w-[520px] mx-auto">
@@ -162,14 +162,20 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
           {mode === 'login' ? (
             <>
               Don&apos;t have an account?{' '}
-              <Link href="/auth/register" className="text-accent hover:underline font-medium">
+              <Link
+                href={`/auth/register${redirectQuery}`}
+                className="text-accent hover:underline font-medium"
+              >
                 Sign up
               </Link>
             </>
           ) : (
             <>
               Already have an account?{' '}
-              <Link href="/auth/login" className="text-accent hover:underline font-medium">
+              <Link
+                href={`/auth/login${redirectQuery}`}
+                className="text-accent hover:underline font-medium"
+              >
                 Sign in
               </Link>
             </>

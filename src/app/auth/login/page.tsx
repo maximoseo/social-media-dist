@@ -1,9 +1,26 @@
+import { redirect } from 'next/navigation';
 import AuthForm from '@/components/auth/AuthForm';
+import { getAuthenticatedUser } from '@/lib/social/guards';
+import { sanitizeRedirectPath } from '@/lib/supabase/auth';
 
 export const metadata = {
-  title: 'Sign In · Social Media Dist',
+  title: 'Sign In | Social Media Dist',
 };
 
-export default function LoginPage() {
-  return <AuthForm mode="login" redirectTo="/dashboard" />;
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams?: { redirect?: string; next?: string };
+}) {
+  const redirectTo = sanitizeRedirectPath(
+    searchParams?.redirect ?? searchParams?.next,
+    '/dashboard',
+  );
+  const user = await getAuthenticatedUser();
+
+  if (user) {
+    redirect(redirectTo);
+  }
+
+  return <AuthForm mode="login" redirectTo={redirectTo} />;
 }

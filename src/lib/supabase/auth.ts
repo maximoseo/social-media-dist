@@ -60,6 +60,9 @@ export function sanitizeRedirectPath(rawPath: string | null | undefined, fallbac
 
   try {
     const url = new URL(rawPath, 'http://localhost');
+    if (url.pathname.startsWith('/auth')) {
+      return fallback;
+    }
     return `${url.pathname}${url.search}${url.hash}`;
   } catch {
     return fallback;
