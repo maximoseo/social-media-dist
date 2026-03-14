@@ -76,8 +76,15 @@ const config: Config = {
         '4.5': '1.125rem',
       },
       borderRadius: {
-        'xl': '0.75rem',
-        '2xl': '1rem',
+        'xl': '1rem',
+        '2xl': '1.5rem',
+        '3xl': '2rem',
+      },
+      boxShadow: {
+        'card': '0 2px 8px -2px rgba(0,0,0,0.12), 0 4px 16px -4px rgba(0,0,0,0.08)',
+        'card-hover': '0 4px 12px -2px rgba(0,0,0,0.15), 0 8px 24px -6px rgba(0,0,0,0.1)',
+        'elevated': '0 8px 32px -8px rgba(0,0,0,0.25)',
+        'glow': '0 0 32px -8px hsl(var(--accent-glow) / 0.2)',
       },
       minHeight: {
         'tap': '44px',

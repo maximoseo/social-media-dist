@@ -37,7 +37,7 @@ export default async function SiteArticlesPage({ params }: { params: { siteId: s
           {articles.length ? (
             articles.map((article) => (
               <Link key={article.id} href={`/sites/${params.siteId}/articles/${article.id}`} className="block">
-                <Card className="rounded-[28px] border-border/70 transition-all hover:-translate-y-0.5 hover:border-accent/30">
+                <Card className="rounded-2xl border-border/70 transition-all hover:-translate-y-0.5 hover:border-accent/30">
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                     <div className="max-w-3xl">
                       <div className="flex flex-wrap items-center gap-2">
@@ -63,7 +63,7 @@ export default async function SiteArticlesPage({ params }: { params: { siteId: s
               </Link>
             ))
           ) : (
-            <div className="flex flex-col items-center justify-center rounded-[28px] border border-dashed border-border/80 bg-surface-overlay/60 px-5 py-16 text-center">
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/80 bg-surface-overlay/60 px-5 py-16 text-center">
               <p className="text-lg font-semibold tracking-tight text-text-primary">No articles imported yet</p>
               <p className="mt-2 max-w-md text-sm leading-6 text-text-secondary">
                 Use the manual import form above or configure n8n webhooks to start receiving articles.

@@ -4,6 +4,7 @@ import {
   CalendarClock,
   FolderKanban,
   Newspaper,
+  Plus,
   Send,
   Sparkles,
 } from 'lucide-react';
@@ -26,111 +27,53 @@ export default async function DashboardPage() {
   const totalArticles = workspaces.reduce((sum, workspace) => sum + workspace.articleCount, 0);
   const totalScheduled = workspaces.reduce((sum, workspace) => sum + workspace.scheduledCount, 0);
   const totalPublished = workspaces.reduce((sum, workspace) => sum + workspace.publishedCount, 0);
-  const stableWorkspaces = workspaces.filter((workspace) => workspace.failedJobs === 0).length;
   const leadWorkspace = workspaces[0];
+
+  const greeting =
+    new Date().getHours() < 12
+      ? 'Good morning'
+      : new Date().getHours() < 17
+        ? 'Good afternoon'
+        : 'Good evening';
 
   return (
     <div className="page-stack">
-      <section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-        <Card padding="none" className="rounded-[32px] border-border/70">
-          <div className="relative overflow-hidden px-6 py-7 sm:px-8 sm:py-8">
-            <div className="absolute inset-0 bg-grid opacity-25" />
-            <div className="absolute -left-10 top-0 h-36 w-36 rounded-full bg-accent/15 blur-3xl" />
-            <div className="absolute bottom-0 right-0 h-40 w-40 rounded-full bg-warning/10 blur-3xl" />
-            <div className="relative">
-              <div className="inline-flex items-center rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-                Command center
+      {/* Compact hero */}
+      <section>
+        <Card padding="none" className="rounded-2xl border-border/70">
+          <div className="relative overflow-hidden px-6 py-6 sm:px-8 sm:py-7">
+            <div className="absolute inset-0 bg-grid opacity-15" />
+            <div className="absolute -left-10 top-0 h-28 w-28 rounded-full bg-accent/10 blur-3xl" />
+            <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-sm text-text-secondary">{greeting}</p>
+                <h2 className="mt-1 text-2xl font-semibold tracking-tight sm:text-[1.75rem]">
+                  Social Distribution Dashboard
+                </h2>
+                <p className="mt-2 max-w-xl text-sm leading-6 text-text-secondary">
+                  Manage workspaces, track publishing pipelines, and monitor distribution across all sites.
+                </p>
               </div>
-              <div className="mt-5 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                <div className="max-w-3xl">
-                  <p className="text-lg text-text-secondary">
-                    {new Date().getHours() < 12 ? 'Good morning' : new Date().getHours() < 17 ? 'Good afternoon' : 'Good evening'}
-                  </p>
-                  <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-[2.2rem]">
-                    Manage multi-site social distribution from one operational dashboard.
-                  </h2>
-                  <p className="mt-4 max-w-2xl text-sm leading-6 text-text-secondary sm:text-base">
-                    Create protected workspaces, receive n8n article payloads, generate AI drafts and
-                    image assets, and keep long-range scheduling visible before anything reaches Publer.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <a href="#create-workspace">
-                    <Button size="lg" icon={<Sparkles className="h-4 w-4" />}>
-                      New workspace
+              <div className="flex flex-wrap gap-3">
+                <a href="#create-workspace">
+                  <Button size="lg" icon={<Plus className="h-4 w-4" />}>
+                    New workspace
+                  </Button>
+                </a>
+                {leadWorkspace ? (
+                  <Link href={`/sites/${leadWorkspace.site.id}`}>
+                    <Button variant="secondary" size="lg" icon={<ArrowRight className="h-4 w-4" />}>
+                      Open lead site
                     </Button>
-                  </a>
-                  {leadWorkspace ? (
-                    <Link href={`/sites/${leadWorkspace.site.id}`}>
-                      <Button variant="secondary" size="lg" icon={<ArrowRight className="h-4 w-4" />}>
-                        Open lead site
-                      </Button>
-                    </Link>
-                  ) : null}
-                </div>
-              </div>
-
-              <div className="mt-8 grid gap-3 md:grid-cols-3">
-                {[
-                  {
-                    label: 'Ready for scheduling',
-                    value: `${totalScheduled} queued items`,
-                    helper: 'Calendar and Publer pipeline are both tracked server-side.',
-                  },
-                  {
-                    label: 'Reliable workspaces',
-                    value: `${stableWorkspaces}/${workspaces.length || 1} stable`,
-                    helper: 'No recent failed jobs in these site queues.',
-                  },
-                  {
-                    label: 'Published throughput',
-                    value: `${totalPublished} completed`,
-                    helper: 'Live publishing results remain linked to each workspace.',
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-[24px] border border-border/70 bg-surface-overlay/70 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
-                  >
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-text-muted">
-                      {item.label}
-                    </p>
-                    <p className="mt-3 text-lg font-semibold text-text-primary">{item.value}</p>
-                    <p className="mt-2 text-sm leading-6 text-text-secondary">{item.helper}</p>
-                  </div>
-                ))}
+                  </Link>
+                ) : null}
               </div>
             </div>
           </div>
         </Card>
-
-        <Card className="rounded-[32px] border-border/70">
-          <p className="eyebrow">Ops snapshot</p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight">What this surface is watching</h2>
-          <div className="mt-6 space-y-4">
-            {[
-              {
-                title: 'Ingestion coverage',
-                copy: 'Every workspace can ingest from n8n webhooks or manual imports without collapsing into shared state.',
-              },
-              {
-                title: 'Draft and asset readiness',
-                copy: 'Post variants and KIE-generated images stay attached to their article, platform, and approval state.',
-              },
-              {
-                title: 'Queue visibility',
-                copy: 'Scheduling, publish attempts, retries, and sync results remain observable per site instead of hidden inside one provider.',
-              },
-            ].map((item) => (
-              <div key={item.title} className="rounded-[24px] border border-border/70 bg-surface-raised/65 px-4 py-4">
-                <p className="text-sm font-semibold text-text-primary">{item.title}</p>
-                <p className="mt-2 text-sm leading-6 text-text-secondary">{item.copy}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
       </section>
 
+      {/* Metrics */}
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           label="Workspaces"
@@ -162,50 +105,14 @@ export default async function DashboardPage() {
         />
       </section>
 
-      <section id="create-workspace-section" className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-        <CreateWorkspaceForm />
-
-        <Card className="rounded-[30px] border-border/70">
-          <p className="eyebrow">Workspace policy</p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight">What each site controls</h2>
-          <p className="mt-3 text-sm leading-6 text-text-secondary">
-            Each workspace is isolated enough to support different clients, brands, or product lines
-            without leaking prompts, calendars, or publishing mappings across teams.
-          </p>
-          <div className="mt-6 grid gap-3 text-sm text-text-secondary">
-            {[
-              {
-                title: 'Brand system',
-                copy: 'Voice, CTA defaults, image prompt rules, and moderation policy.',
-              },
-              {
-                title: 'Channel operations',
-                copy: 'Target platforms, Publer account mappings, approval requirements, and retry behavior.',
-              },
-              {
-                title: 'Content logistics',
-                copy: 'n8n intake, Google Sheets sync, scheduling preferences, timezone, and campaign defaults.',
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="rounded-[24px] border border-border/70 bg-surface-raised/60 px-4 py-4"
-              >
-                <p className="font-semibold text-text-primary">{item.title}</p>
-                <p className="mt-2 leading-6">{item.copy}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
-      </section>
-
+      {/* Workspace directory */}
       <section className="section-shell">
         <div className="section-header">
           <div>
             <p className="eyebrow">Workspace directory</p>
-            <h2 className="section-subtitle mt-3">Select a site workspace</h2>
-            <p className="section-copy mt-3">
-              Each workspace stays isolated with its own prompts, approvals, publishing accounts, and history.
+            <h2 className="section-subtitle mt-2">Your site workspaces</h2>
+            <p className="section-copy mt-2">
+              Each workspace is isolated with its own content pipeline, approvals, and publishing accounts.
             </p>
           </div>
           <div className="toolbar-chip">{workspaces.length} workspace{workspaces.length === 1 ? '' : 's'}</div>
@@ -213,14 +120,20 @@ export default async function DashboardPage() {
 
         {!workspaces.length ? (
           <EmptyState
+            icon={<FolderKanban className="h-8 w-8" />}
             title="No workspaces yet"
-            description="Create a workspace to start importing articles and planning a publishing calendar."
+            description="Create your first workspace to start importing articles and planning a publishing calendar."
+            action={
+              <a href="#create-workspace">
+                <Button icon={<Sparkles className="h-4 w-4" />}>Create workspace</Button>
+              </a>
+            }
           />
         ) : (
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             {workspaces.map((workspace) => (
               <Link key={workspace.site.id} href={`/sites/${workspace.site.id}`} className="block">
-                <Card className="h-full rounded-[30px] border-border/70 transition-all hover:-translate-y-1 hover:border-accent/30">
+                <Card className="h-full rounded-2xl border-border/70 transition-all hover:-translate-y-0.5 hover:border-accent/25 hover:shadow-card-hover">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-lg font-semibold tracking-tight">{workspace.site.name}</p>
@@ -228,37 +141,37 @@ export default async function DashboardPage() {
                     </div>
                     <StatusBadge status={workspace.site.status} />
                   </div>
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-[22px] border border-border/60 bg-surface-raised/70 px-4 py-3">
-                      <p className="text-xs uppercase tracking-[0.22em] text-text-muted">Articles</p>
-                      <p className="mt-2 text-2xl font-semibold">{workspace.articleCount}</p>
-                    </div>
-                    <div className="rounded-[22px] border border-border/60 bg-surface-raised/70 px-4 py-3">
-                      <p className="text-xs uppercase tracking-[0.22em] text-text-muted">Scheduled</p>
-                      <p className="mt-2 text-2xl font-semibold">{workspace.scheduledCount}</p>
-                    </div>
-                    <div className="rounded-[22px] border border-border/60 bg-surface-raised/70 px-4 py-3">
-                      <p className="text-xs uppercase tracking-[0.22em] text-text-muted">Published</p>
-                      <p className="mt-2 text-2xl font-semibold">{workspace.publishedCount}</p>
-                    </div>
-                    <div className="rounded-[22px] border border-border/60 bg-surface-raised/70 px-4 py-3">
-                      <p className="text-xs uppercase tracking-[0.22em] text-text-muted">Failed jobs</p>
-                      <p className="mt-2 text-2xl font-semibold">{workspace.failedJobs}</p>
-                    </div>
+                  <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    {[
+                      { label: 'Articles', value: workspace.articleCount },
+                      { label: 'Scheduled', value: workspace.scheduledCount },
+                      { label: 'Published', value: workspace.publishedCount },
+                      { label: 'Failed', value: workspace.failedJobs },
+                    ].map((stat) => (
+                      <div key={stat.label} className="rounded-xl border border-border/60 bg-surface-raised/70 px-3 py-2.5">
+                        <p className="text-[10px] uppercase tracking-[0.2em] text-text-muted">{stat.label}</p>
+                        <p className="mt-1 text-xl font-semibold">{stat.value}</p>
+                      </div>
+                    ))}
                   </div>
-                  <div className="mt-6 flex items-center justify-between rounded-[22px] border border-accent/15 bg-accent/[0.08] px-4 py-3 text-sm text-text-secondary">
-                    <span>
+                  <div className="mt-4 flex items-center justify-between text-sm">
+                    <span className="text-text-secondary">
                       {workspace.failedJobs === 0
-                        ? 'Queue healthy and ready for new scheduling'
-                        : 'Attention needed in retry queue'}
+                        ? 'Queue healthy'
+                        : 'Attention needed'}
                     </span>
-                    <span className="font-medium text-accent">Open workspace</span>
+                    <span className="font-medium text-accent">Open workspace →</span>
                   </div>
                 </Card>
               </Link>
             ))}
           </div>
         )}
+      </section>
+
+      {/* Create workspace */}
+      <section id="create-workspace-section">
+        <CreateWorkspaceForm />
       </section>
     </div>
   );

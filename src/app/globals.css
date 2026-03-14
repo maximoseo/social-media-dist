@@ -108,9 +108,8 @@
 
   body {
     background:
-      radial-gradient(circle at 0% 0%, hsl(var(--accent) / 0.17), transparent 26%),
-      radial-gradient(circle at 100% 0%, hsl(var(--warning) / 0.1), transparent 22%),
-      radial-gradient(circle at 50% 100%, hsl(var(--info) / 0.08), transparent 28%),
+      radial-gradient(circle at 0% 0%, hsl(var(--accent) / 0.08), transparent 30%),
+      radial-gradient(circle at 100% 0%, hsl(var(--warning) / 0.04), transparent 26%),
       linear-gradient(180deg, hsl(var(--background)), hsl(224 37% 5%));
     font-family: var(--font-sans), sans-serif;
     color: hsl(var(--text-primary));
@@ -123,11 +122,11 @@
     inset: 0;
     pointer-events: none;
     background-image:
-      linear-gradient(to right, hsl(var(--border-subtle) / 0.32) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(var(--border-subtle) / 0.22) 1px, transparent 1px);
+      linear-gradient(to right, hsl(var(--border-subtle) / 0.2) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border-subtle) / 0.15) 1px, transparent 1px);
     background-size: 72px 72px;
-    mask-image: radial-gradient(circle at center, black 18%, transparent 78%);
-    opacity: 0.22;
+    mask-image: radial-gradient(circle at center, black 12%, transparent 70%);
+    opacity: 0.12;
   }
 
   body::after {
@@ -135,8 +134,8 @@
     position: fixed;
     inset: auto 0 0 0;
     pointer-events: none;
-    height: 36vh;
-    background: linear-gradient(180deg, transparent, hsl(224 48% 3% / 0.7));
+    height: 28vh;
+    background: linear-gradient(180deg, transparent, hsl(224 48% 3% / 0.4));
   }
 
   h1, h2, h3 {
@@ -169,7 +168,7 @@
   }
 
   .page-hero {
-    @apply relative overflow-hidden rounded-[32px] border border-border/70 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.95)] shadow-[0_36px_120px_-64px_rgba(0,0,0,0.95)];
+    @apply relative overflow-hidden rounded-2xl border border-border/70 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.95)] shadow-elevated;
   }
 
   .page-hero-inner {
@@ -193,11 +192,11 @@
   }
 
   .panel {
-    @apply rounded-[26px] border border-border/80 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.94)] shadow-[0_30px_90px_-52px_rgba(0,0,0,0.82)] backdrop-blur-sm;
+    @apply rounded-2xl border border-border/80 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.94)] shadow-card backdrop-blur-sm;
   }
 
   .panel-muted {
-    @apply rounded-[24px] border border-border/80 bg-[linear-gradient(180deg,hsl(var(--surface-raised))/0.82,hsl(var(--surface-overlay))/0.82)];
+    @apply rounded-xl border border-border/80 bg-[linear-gradient(180deg,hsl(var(--surface-raised))/0.82,hsl(var(--surface-overlay))/0.82)];
   }
 
   .section-shell {
@@ -217,11 +216,11 @@
   }
 
   .data-card {
-    @apply rounded-[24px] border border-border/70 bg-surface-raised/60 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)];
+    @apply rounded-xl border border-border/70 bg-surface-raised/60 px-4 py-4;
   }
 
   .list-card {
-    @apply rounded-[24px] border border-border/70 bg-[linear-gradient(180deg,hsl(var(--surface-raised))/0.8,hsl(var(--surface-overlay))/0.82)] px-4 py-4 transition-all;
+    @apply rounded-xl border border-border/70 bg-[linear-gradient(180deg,hsl(var(--surface-raised))/0.8,hsl(var(--surface-overlay))/0.82)] px-4 py-4 transition-all;
   }
 
   .field-group {
@@ -237,7 +236,7 @@
   }
 
   .field-input {
-    @apply w-full rounded-[20px] border border-input-border/90 bg-input-bg/85 px-4 py-3 text-sm text-text-primary outline-none transition-all placeholder:text-text-muted/80 focus:border-input-focus focus:bg-surface focus:shadow-[0_0_0_4px_hsl(var(--accent)_/_0.12)];
+    @apply w-full rounded-xl border border-input-border/90 bg-input-bg/85 px-4 py-3 text-sm text-text-primary outline-none transition-all placeholder:text-text-muted/80 focus:border-input-focus focus:bg-surface focus:shadow-[0_0_0_3px_hsl(var(--accent)_/_0.12)];
   }
 
   .field-textarea {

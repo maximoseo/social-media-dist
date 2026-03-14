@@ -96,7 +96,7 @@ function ToastItem({ toast, onRemove }: { toast: Toast; onRemove: (id: string) =
   return (
     <div
       className={cn(
-        'pointer-events-auto flex items-start gap-3 rounded-[24px] border px-4 py-4 shadow-[0_26px_70px_-42px_rgba(0,0,0,0.9)] backdrop-blur-md transition-all duration-200 ease-out',
+        'pointer-events-auto flex items-start gap-3 rounded-xl border px-4 py-4 shadow-[0_26px_70px_-42px_rgba(0,0,0,0.9)] backdrop-blur-md transition-all duration-200 ease-out',
         variantStyles[toast.variant],
         isLeaving ? 'translate-x-4 scale-95 opacity-0' : 'translate-x-0 scale-100 opacity-100',
       )}

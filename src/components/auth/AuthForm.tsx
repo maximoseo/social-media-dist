@@ -82,7 +82,7 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
 
   return (
     <div className="w-full max-w-[520px] mx-auto">
-      <div className="rounded-[32px] border border-border/80 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.96)] p-7 shadow-[0_40px_120px_-64px_rgba(0,0,0,0.9)] sm:p-8">
+      <div className="rounded-2xl border border-border/80 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.96)] p-7 shadow-[0_40px_120px_-64px_rgba(0,0,0,0.9)] sm:p-8">
         <div className="toolbar-chip w-fit border-accent/20 bg-accent/10 text-accent">
           {mode === 'login' ? 'Secure sign in' : 'Create operator account'}
         </div>
@@ -96,7 +96,7 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
         </p>
 
         {!isSupabaseConfigured && (
-          <div className="mb-4 rounded-[22px] border border-warning/25 bg-warning/[0.12] px-4 py-3 text-body text-warning">
+          <div className="mb-4 rounded-xl border border-warning/25 bg-warning/[0.12] px-4 py-3 text-body text-warning">
             <p className="font-medium">Authentication is unavailable because Supabase is not configured.</p>
             {!!supabaseConfig.missing.length && (
               <p className="mt-2">Missing: {supabaseConfig.missing.join(', ')}</p>
@@ -109,13 +109,13 @@ export default function AuthForm({ mode, redirectTo }: AuthFormProps) {
         )}
 
         {error && (
-          <div className="mb-4 rounded-[22px] border border-destructive/25 bg-destructive/[0.12] px-4 py-3 text-body text-destructive">
+          <div className="mb-4 rounded-xl border border-destructive/25 bg-destructive/[0.12] px-4 py-3 text-body text-destructive">
             {error}
           </div>
         )}
 
         {success && (
-          <div className="mb-4 rounded-[22px] border border-success/25 bg-success/[0.12] px-4 py-3 text-body text-success">
+          <div className="mb-4 rounded-xl border border-success/25 bg-success/[0.12] px-4 py-3 text-body text-success">
             {success}
           </div>
         )}

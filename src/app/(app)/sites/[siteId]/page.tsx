@@ -76,7 +76,7 @@ export default async function SiteOverviewPage({ params }: { params: { siteId: s
           </div>
         </Card>
 
-        <Card className="rounded-[30px] border-border/70">
+        <Card className="rounded-2xl border-border/70">
           <p className="eyebrow">Current rules</p>
           <h3 className="section-subtitle mt-3">Operational configuration snapshot</h3>
           <div className="mt-6 grid gap-3 sm:grid-cols-2 text-sm">
@@ -104,7 +104,7 @@ export default async function SiteOverviewPage({ params }: { params: { siteId: s
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[1fr_1fr]">
-        <Card className="rounded-[30px] border-border/70">
+        <Card className="rounded-2xl border-border/70">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="eyebrow">Upcoming schedule</p>
@@ -136,7 +136,7 @@ export default async function SiteOverviewPage({ params }: { params: { siteId: s
           </div>
         </Card>
 
-        <Card className="rounded-[30px] border-border/70">
+        <Card className="rounded-2xl border-border/70">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="eyebrow">Recent activity</p>
@@ -176,7 +176,7 @@ export default async function SiteOverviewPage({ params }: { params: { siteId: s
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[1fr_1fr]">
-        <Card className="rounded-[30px] border-border/70">
+        <Card className="rounded-2xl border-border/70">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="eyebrow">Imported articles</p>
@@ -202,7 +202,7 @@ export default async function SiteOverviewPage({ params }: { params: { siteId: s
           </div>
         </Card>
 
-        <Card className="rounded-[30px] border-border/70">
+        <Card className="rounded-2xl border-border/70">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="eyebrow">Publishing history</p>

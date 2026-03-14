@@ -47,7 +47,7 @@ export default function Tabs({ tabs, activeTab, onChange }: TabsProps) {
       )}
       <div
         ref={containerRef}
-        className="flex overflow-x-auto rounded-[24px] border border-border/70 bg-surface-overlay/75 p-1.5 scrollbar-none"
+        className="flex overflow-x-auto rounded-xl border border-border/70 bg-surface-overlay/75 p-1.5 scrollbar-none"
         style={{ scrollbarWidth: 'none' }}
       >
         {tabs.map((tab) => (

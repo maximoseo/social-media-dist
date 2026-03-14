@@ -62,7 +62,7 @@ export function AppShell({
       <aside className="hidden w-[318px] shrink-0 flex-col border-r border-white/5 bg-sidebar-bg px-5 py-5 text-sidebar-text lg:flex before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-accent/40 before:to-transparent relative">
         <Link
           href="/dashboard"
-          className="rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] px-5 py-5 shadow-[0_30px_80px_-55px_rgba(14,165,233,0.8)] backdrop-blur"
+          className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] px-5 py-5 shadow-[0_8px_24px_-8px_rgba(14,165,233,0.4)] backdrop-blur"
         >
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -124,7 +124,7 @@ export function AppShell({
         </nav>
 
         {currentSite ? (
-          <div className="mt-6 rounded-[28px] border border-white/8 bg-white/[0.04] p-4">
+          <div className="mt-6 rounded-2xl border border-white/8 bg-white/[0.04] p-4">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="eyebrow text-white/45">Current site</p>
@@ -153,9 +153,9 @@ export function AppShell({
                 key={site.id}
                 href={`/sites/${site.id}`}
                 className={cn(
-                  'block rounded-[24px] border px-4 py-3.5 transition-all',
+                  'block rounded-xl border px-4 py-3.5 transition-all',
                   currentSiteId === site.id
-                    ? 'border-accent/25 bg-accent/[0.14] text-white shadow-[0_20px_45px_-32px_rgba(14,165,233,0.7)]'
+                    ? 'border-accent/25 bg-accent/[0.14] text-white shadow-[0_4px_16px_-8px_rgba(14,165,233,0.5)]'
                     : 'border-white/10 bg-white/[0.045] text-white/70 hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/[0.075]',
                 )}
               >
@@ -171,7 +171,7 @@ export function AppShell({
           </div>
         </div>
 
-        <div className="mt-auto rounded-[28px] border border-white/10 bg-white/[0.055] p-4 backdrop-blur">
+        <div className="mt-auto rounded-2xl border border-white/10 bg-white/[0.055] p-4 backdrop-blur">
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-sm font-semibold text-white">
               {user.displayName.slice(0, 1).toUpperCase()}
@@ -273,9 +273,9 @@ function SidebarLink({
     <Link
       href={href}
       className={cn(
-        'group flex items-center justify-between gap-3 rounded-[22px] border px-3.5 py-3 text-sm font-medium transition-all',
+        'group flex items-center justify-between gap-3 rounded-xl border px-3.5 py-3 text-sm font-medium transition-all',
         active
-          ? 'border-accent/25 bg-accent/[0.12] text-white shadow-[0_18px_40px_-34px_rgba(14,165,233,0.9)]'
+          ? 'border-accent/25 bg-accent/[0.12] text-white shadow-[0_4px_16px_-8px_rgba(14,165,233,0.5)]'
           : 'border-transparent text-white/60 hover:border-white/10 hover:bg-white/[0.055] hover:text-white',
       )}
     >

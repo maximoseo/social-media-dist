@@ -70,7 +70,7 @@ export default async function ArticleDetailPage({
       <section className="space-y-4">
         {detail.drafts.length ? (
           detail.drafts.map((draft) => (
-            <Card key={draft.id} className="rounded-[30px] border-border/70">
+            <Card key={draft.id} className="rounded-2xl border-border/70">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
                   <p className="eyebrow">Draft bundle</p>
@@ -86,7 +86,7 @@ export default async function ArticleDetailPage({
 
               <div className="mt-6 grid gap-4 xl:grid-cols-2">
                 {draft.variants.map((variant) => (
-                  <div key={variant.id} className="rounded-[28px] border border-border/70 bg-surface-raised/60 p-5">
+                  <div key={variant.id} className="rounded-2xl border border-border/70 bg-surface-raised/60 p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <p className="text-sm font-semibold capitalize">{variant.platform.replace(/_/g, ' ')}</p>
@@ -117,7 +117,7 @@ export default async function ArticleDetailPage({
               {!!draft.assets.length && (
                 <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                   {draft.assets.map((asset) => (
-                    <div key={asset.id} className="rounded-[24px] border border-border/70 bg-surface p-3">
+                    <div key={asset.id} className="rounded-xl border border-border/70 bg-surface p-3">
                       {asset.public_url ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={asset.public_url} alt="Generated asset" className="h-56 w-full rounded-[20px] object-cover" />

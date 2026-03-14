@@ -30,7 +30,7 @@ export default async function SiteHistoryPage({ params }: { params: { siteId: st
       <div className="mt-6 space-y-3">
         {history.length ? (
           history.map((job) => (
-            <Card key={job.id} className="rounded-[28px] border-border/70">
+            <Card key={job.id} className="rounded-2xl border-border/70">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-sm font-semibold">{job.action.replace('_', ' ')}</p>
@@ -61,7 +61,7 @@ export default async function SiteHistoryPage({ params }: { params: { siteId: st
             </Card>
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center rounded-[28px] border border-dashed border-border/80 bg-surface-overlay/60 px-5 py-16 text-center">
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/80 bg-surface-overlay/60 px-5 py-16 text-center">
             <p className="text-lg font-semibold tracking-tight text-text-primary">No publish jobs yet</p>
             <p className="mt-2 max-w-md text-sm leading-6 text-text-secondary">
               Schedule content from the calendar page and publish through Publer to see results here.

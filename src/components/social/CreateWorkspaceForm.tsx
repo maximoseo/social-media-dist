@@ -13,8 +13,6 @@ const workspaceHighlights = [
   { label: 'Approval capable', icon: BadgeCheck },
 ] as const;
 
-const inputClassName =
-  'mt-2 w-full rounded-2xl border border-input-border/90 bg-input-bg/80 px-4 py-3 text-sm text-text-primary outline-none ring-0 transition-all placeholder:text-text-muted/80 focus:border-input-focus focus:bg-surface focus:shadow-[0_0_0_4px_hsl(var(--accent)_/_0.12)]';
 
 export function CreateWorkspaceForm() {
   const router = useRouter();
@@ -63,7 +61,7 @@ export function CreateWorkspaceForm() {
     <form
       id="create-workspace"
       onSubmit={handleSubmit}
-      className="grid gap-6 rounded-[30px] border border-border/70 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.95)] p-6 sm:p-7"
+      className="grid gap-6 rounded-2xl border border-border/70 bg-[linear-gradient(180deg,hsl(var(--surface))/0.98,hsl(var(--surface-raised))/0.95)] p-6 sm:p-7"
     >
       <div className="section-header">
         <div className="max-w-xl">
@@ -80,7 +78,7 @@ export function CreateWorkspaceForm() {
           {workspaceHighlights.map((item) => (
             <div
               key={item.label}
-              className="flex items-center gap-3 rounded-[22px] border border-border/70 bg-surface-raised/65 px-4 py-3 text-sm text-text-secondary"
+              className="flex items-center gap-3 rounded-xl border border-border/70 bg-surface-raised/65 px-4 py-3 text-sm text-text-secondary"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-2xl border border-accent/15 bg-accent/10 text-accent">
                 <item.icon className="h-4 w-4" />
@@ -138,7 +136,7 @@ export function CreateWorkspaceForm() {
           }
           rows={5}
           placeholder="Direct, practical, and premium. Avoid hype. Anchor every post to tangible value and keep CTAs clear."
-          className={cn(inputClassName, 'min-h-[148px] resize-y')}
+          className={cn('field-input mt-2 rounded-xl', 'min-h-[148px] resize-y')}
         />
       </label>
 
@@ -184,7 +182,7 @@ function Input({
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
-          className={cn(inputClassName, icon ? 'pl-11' : '')}
+          className={cn('field-input mt-2', icon ? 'pl-11' : '')}
         />
       </div>
     </label>

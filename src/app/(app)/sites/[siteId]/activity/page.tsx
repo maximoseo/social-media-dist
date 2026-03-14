@@ -29,7 +29,7 @@ export default async function SiteActivityPage({ params }: { params: { siteId: s
       <div className="mt-6 space-y-3">
         {activity.length ? (
           activity.map((item) => (
-            <Card key={item.id} className="rounded-[28px] border-border/70">
+            <Card key={item.id} className="rounded-2xl border-border/70">
               <div className="flex items-start gap-3">
                 <span className={`mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full ${
                   item.severity === 'error' ? 'bg-destructive' :
@@ -49,7 +49,7 @@ export default async function SiteActivityPage({ params }: { params: { siteId: s
             </Card>
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center rounded-[28px] border border-dashed border-border/80 bg-surface-overlay/60 px-5 py-16 text-center">
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/80 bg-surface-overlay/60 px-5 py-16 text-center">
             <p className="text-lg font-semibold tracking-tight text-text-primary">No activity recorded yet</p>
             <p className="mt-2 max-w-md text-sm leading-6 text-text-secondary">
               Activity will appear here as articles are imported, drafts generated, and content published.

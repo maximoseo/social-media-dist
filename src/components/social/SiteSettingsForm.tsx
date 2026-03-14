@@ -154,7 +154,7 @@ export function SiteSettingsForm({ bundle }: { bundle: SiteBundle }) {
         {platformOptions.map((platform) => {
           const checked = form.targetPlatforms.includes(platform);
           return (
-            <label key={platform} className="group flex items-center gap-3 rounded-[22px] border border-border/70 bg-surface-raised/60 px-4 py-3 text-sm text-text-secondary transition-all hover:border-accent/20">
+            <label key={platform} className="group flex items-center gap-3 rounded-xl border border-border/70 bg-surface-raised/60 px-4 py-3 text-sm text-text-secondary transition-all hover:border-accent/20">
               <input
                 type="checkbox"
                 checked={checked}
@@ -216,7 +216,7 @@ export function SiteSettingsForm({ bundle }: { bundle: SiteBundle }) {
           value={form.imageStylePrompt}
           onChange={(imageStylePrompt) => setForm((current) => ({ ...current, imageStylePrompt }))}
         />
-        <label className="mt-4 inline-flex cursor-pointer items-center gap-3 rounded-[22px] border border-border/70 bg-surface-raised/60 px-4 py-3.5 text-sm font-medium transition-colors hover:border-accent/20 hover:bg-surface-raised/80">
+        <label className="mt-4 inline-flex cursor-pointer items-center gap-3 rounded-xl border border-border/70 bg-surface-raised/60 px-4 py-3.5 text-sm font-medium transition-colors hover:border-accent/20 hover:bg-surface-raised/80">
         <input
           type="checkbox"
           checked={form.approvalRequired}
