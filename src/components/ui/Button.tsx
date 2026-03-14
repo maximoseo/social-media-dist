@@ -12,7 +12,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles = {
   primary:
-    'border border-accent/30 bg-[linear-gradient(135deg,hsl(var(--accent)),hsl(var(--accent-hover)))] text-accent-foreground shadow-[0_18px_40px_-22px_rgba(14,165,233,0.75)] hover:-translate-y-0.5 hover:brightness-105 hover:shadow-[0_4px_16px_-4px_hsl(var(--accent)/0.4)]',
+    'border border-accent/30 bg-[linear-gradient(135deg,hsl(var(--accent)),hsl(var(--accent-hover)))] text-accent-foreground shadow-[0_18px_40px_-22px_hsl(var(--accent-glow)/0.5)] hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_4px_16px_-4px_hsl(var(--accent-glow)/0.4)]',
   secondary:
     'border border-border/80 bg-surface-raised/80 text-text-primary hover:-translate-y-0.5 hover:border-accent/20 hover:bg-surface',
   ghost:

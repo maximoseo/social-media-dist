@@ -5,21 +5,21 @@
 @layer base {
   :root,
   .light {
-    --background: 214 33% 97%;
+    --background: 250 20% 97%;
     --surface: 0 0% 100%;
-    --surface-raised: 210 28% 96%;
+    --surface-raised: 252 18% 96%;
     --surface-overlay: 0 0% 100%;
-    --border: 215 24% 84%;
-    --border-subtle: 214 26% 91%;
-    --text-primary: 220 33% 12%;
-    --text-secondary: 222 18% 32%;
-    --text-muted: 219 11% 50%;
+    --border: 252 16% 88%;
+    --border-subtle: 250 14% 93%;
+    --text-primary: 258 30% 12%;
+    --text-secondary: 254 14% 38%;
+    --text-muted: 252 8% 55%;
     --text-inverted: 0 0% 100%;
-    --accent: 206 100% 46%;
-    --accent-hover: 206 100% 40%;
+    --accent: 265 90% 58%;
+    --accent-hover: 265 90% 50%;
     --accent-foreground: 0 0% 100%;
-    --accent-muted: 204 100% 95%;
-    --accent-glow: 206 100% 46%;
+    --accent-muted: 265 80% 95%;
+    --accent-glow: 265 90% 58%;
     --destructive: 0 78% 55%;
     --destructive-foreground: 0 0% 100%;
     --success: 152 76% 30%;
@@ -28,60 +28,60 @@
     --warning: 34 91% 50%;
     --warning-foreground: 0 0% 100%;
     --warning-muted: 35 88% 93%;
-    --info: 214 91% 52%;
+    --info: 265 60% 52%;
     --info-foreground: 0 0% 100%;
-    --info-muted: 214 100% 95%;
+    --info-muted: 265 60% 95%;
     --input-bg: 0 0% 100%;
-    --input-border: 214 24% 82%;
-    --input-focus: 206 100% 46%;
-    --ring: 206 100% 46%;
-    --sidebar-bg: 218 35% 10%;
-    --sidebar-active: 206 90% 18%;
-    --sidebar-text: 215 21% 82%;
-    --tab-active: 206 100% 46%;
-    --tab-inactive: 220 10% 58%;
-    --scrollbar-track: 214 32% 94%;
-    --scrollbar-thumb: 216 17% 78%;
+    --input-border: 252 16% 84%;
+    --input-focus: 265 90% 58%;
+    --ring: 265 90% 58%;
+    --sidebar-bg: 258 22% 10%;
+    --sidebar-active: 265 70% 22%;
+    --sidebar-text: 252 16% 78%;
+    --tab-active: 265 90% 58%;
+    --tab-inactive: 252 10% 58%;
+    --scrollbar-track: 250 18% 94%;
+    --scrollbar-thumb: 252 14% 78%;
   }
 
   .dark {
-    --background: 225 40% 6%;
-    --surface: 222 28% 10%;
-    --surface-raised: 221 23% 14%;
-    --surface-overlay: 224 34% 8%;
-    --border: 219 18% 20%;
-    --border-subtle: 220 16% 13%;
-    --text-primary: 214 62% 96%;
-    --text-secondary: 214 23% 74%;
-    --text-muted: 217 12% 56%;
-    --text-inverted: 220 30% 7%;
-    --accent: 194 92% 58%;
-    --accent-hover: 194 92% 64%;
-    --accent-foreground: 219 37% 9%;
-    --accent-muted: 194 62% 15%;
-    --accent-glow: 194 92% 58%;
+    --background: 260 20% 4%;
+    --surface: 258 18% 8%;
+    --surface-raised: 256 16% 12%;
+    --surface-overlay: 260 22% 6%;
+    --border: 258 14% 18%;
+    --border-subtle: 260 12% 12%;
+    --text-primary: 250 20% 95%;
+    --text-secondary: 252 12% 70%;
+    --text-muted: 254 8% 48%;
+    --text-inverted: 260 20% 5%;
+    --accent: 265 90% 65%;
+    --accent-hover: 265 90% 72%;
+    --accent-foreground: 0 0% 100%;
+    --accent-muted: 265 50% 18%;
+    --accent-glow: 265 90% 65%;
     --destructive: 0 80% 61%;
     --destructive-foreground: 0 0% 100%;
     --success: 152 76% 37%;
     --success-foreground: 0 0% 100%;
     --success-muted: 152 42% 16%;
     --warning: 36 96% 58%;
-    --warning-foreground: 220 30% 7%;
+    --warning-foreground: 260 20% 5%;
     --warning-muted: 35 72% 17%;
-    --info: 214 100% 64%;
-    --info-foreground: 220 30% 7%;
-    --info-muted: 214 51% 16%;
-    --input-bg: 223 23% 12%;
-    --input-border: 219 16% 26%;
-    --input-focus: 194 92% 58%;
-    --ring: 194 92% 58%;
-    --sidebar-bg: 226 42% 5%;
-    --sidebar-active: 194 74% 16%;
-    --sidebar-text: 214 24% 78%;
-    --tab-active: 194 92% 58%;
-    --tab-inactive: 218 12% 50%;
-    --scrollbar-track: 221 28% 8%;
-    --scrollbar-thumb: 219 16% 24%;
+    --info: 265 70% 68%;
+    --info-foreground: 260 20% 5%;
+    --info-muted: 265 40% 16%;
+    --input-bg: 258 16% 10%;
+    --input-border: 256 12% 22%;
+    --input-focus: 265 90% 65%;
+    --ring: 265 90% 65%;
+    --sidebar-bg: 260 25% 3%;
+    --sidebar-active: 265 60% 18%;
+    --sidebar-text: 252 15% 72%;
+    --tab-active: 265 90% 65%;
+    --tab-inactive: 254 12% 50%;
+    --scrollbar-track: 258 18% 8%;
+    --scrollbar-thumb: 256 14% 24%;
   }
 
   * {
@@ -108,9 +108,8 @@
 
   body {
     background:
-      radial-gradient(circle at 0% 0%, hsl(var(--accent) / 0.08), transparent 30%),
-      radial-gradient(circle at 100% 0%, hsl(var(--warning) / 0.04), transparent 26%),
-      linear-gradient(180deg, hsl(var(--background)), hsl(224 37% 5%));
+      radial-gradient(circle at 0% 0%, hsl(var(--accent) / 0.06), transparent 35%),
+      linear-gradient(180deg, hsl(var(--background)), hsl(var(--background)));
     font-family: var(--font-sans), sans-serif;
     color: hsl(var(--text-primary));
     min-height: 100vh;
@@ -122,11 +121,11 @@
     inset: 0;
     pointer-events: none;
     background-image:
-      linear-gradient(to right, hsl(var(--border-subtle) / 0.2) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(var(--border-subtle) / 0.15) 1px, transparent 1px);
+      linear-gradient(to right, hsl(var(--border-subtle) / 0.15) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border-subtle) / 0.1) 1px, transparent 1px);
     background-size: 72px 72px;
-    mask-image: radial-gradient(circle at center, black 12%, transparent 70%);
-    opacity: 0.12;
+    mask-image: radial-gradient(circle at center, black 10%, transparent 65%);
+    opacity: 0.06;
   }
 
   body::after {
@@ -134,8 +133,8 @@
     position: fixed;
     inset: auto 0 0 0;
     pointer-events: none;
-    height: 28vh;
-    background: linear-gradient(180deg, transparent, hsl(224 48% 3% / 0.4));
+    height: 20vh;
+    background: linear-gradient(180deg, transparent, hsl(var(--background) / 0.6));
   }
 
   h1, h2, h3 {

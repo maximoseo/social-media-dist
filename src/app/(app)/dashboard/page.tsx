@@ -41,9 +41,10 @@ export default async function DashboardPage() {
       {/* Compact hero */}
       <section>
         <Card padding="none" className="rounded-2xl border-border/70">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
           <div className="relative overflow-hidden px-6 py-6 sm:px-8 sm:py-7">
-            <div className="absolute inset-0 bg-grid opacity-15" />
-            <div className="absolute -left-10 top-0 h-28 w-28 rounded-full bg-accent/10 blur-3xl" />
+            <div className="absolute inset-0 bg-grid opacity-10" />
+            <div className="absolute -left-10 top-0 h-28 w-28 rounded-full bg-accent/8 blur-3xl" />
             <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="text-sm text-text-secondary">{greeting}</p>
@@ -160,7 +161,9 @@ export default async function DashboardPage() {
                         ? 'Queue healthy'
                         : 'Attention needed'}
                     </span>
-                    <span className="font-medium text-accent">Open workspace →</span>
+                    <span className="inline-flex items-center gap-1.5 rounded-lg border border-accent/20 bg-accent/10 px-3 py-1.5 text-xs font-semibold text-accent">
+                      Open <ArrowRight className="h-3 w-3" />
+                    </span>
                   </div>
                 </Card>
               </Link>
@@ -170,7 +173,7 @@ export default async function DashboardPage() {
       </section>
 
       {/* Create workspace */}
-      <section id="create-workspace-section">
+      <section id="create-workspace" className="scroll-mt-24">
         <CreateWorkspaceForm />
       </section>
     </div>

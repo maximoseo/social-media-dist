@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               </div>
               <p className="eyebrow mt-6">Social Distribution Control</p>
               <h1 className="mt-4 text-[2.85rem] font-semibold leading-[1.05] tracking-tight text-text-primary">
-                Operational publishing for <span className="bg-gradient-to-r from-accent to-info bg-clip-text text-transparent">every brand</span>, queue, and approval state.
+                Operational publishing for <span className="bg-gradient-to-r from-accent to-accent-hover bg-clip-text text-transparent">every brand</span>, queue, and approval state.
               </h1>
               <p className="mt-5 max-w-xl text-base leading-7 text-text-secondary">
                 Receive article payloads from n8n, turn them into channel-ready campaigns, generate

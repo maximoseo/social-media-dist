@@ -62,7 +62,7 @@ export function AppShell({
       <aside className="hidden w-[318px] shrink-0 flex-col border-r border-white/5 bg-sidebar-bg px-5 py-5 text-sidebar-text lg:flex before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-accent/40 before:to-transparent relative">
         <Link
           href="/dashboard"
-          className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] px-5 py-5 shadow-[0_8px_24px_-8px_rgba(14,165,233,0.4)] backdrop-blur"
+          className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] px-5 py-5 shadow-[0_8px_24px_-8px_hsl(var(--accent-glow)/0.35)] backdrop-blur"
         >
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -155,7 +155,7 @@ export function AppShell({
                 className={cn(
                   'block rounded-xl border px-4 py-3.5 transition-all',
                   currentSiteId === site.id
-                    ? 'border-accent/25 bg-accent/[0.14] text-white shadow-[0_4px_16px_-8px_rgba(14,165,233,0.5)]'
+                    ? 'border-accent/25 bg-accent/[0.14] text-white shadow-[0_4px_16px_-8px_hsl(var(--accent-glow)/0.4)]'
                     : 'border-white/10 bg-white/[0.045] text-white/70 hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/[0.075]',
                 )}
               >
@@ -275,7 +275,7 @@ function SidebarLink({
       className={cn(
         'group flex items-center justify-between gap-3 rounded-xl border px-3.5 py-3 text-sm font-medium transition-all',
         active
-          ? 'border-accent/25 bg-accent/[0.12] text-white shadow-[0_4px_16px_-8px_rgba(14,165,233,0.5)]'
+          ? 'border-accent/25 bg-accent/[0.12] text-white shadow-[0_4px_16px_-8px_hsl(var(--accent-glow)/0.4)]'
           : 'border-transparent text-white/60 hover:border-white/10 hover:bg-white/[0.055] hover:text-white',
       )}
     >

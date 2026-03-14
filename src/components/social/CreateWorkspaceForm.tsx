@@ -89,56 +89,79 @@ export function CreateWorkspaceForm() {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Input
-          label="Organization"
-          description="Owning client, business group, or internal org."
-          value={form.organizationName}
-          onChange={(value) => setForm((current) => ({ ...current, organizationName: value }))}
-          placeholder="Maximo SEO"
-        />
-        <Input
-          label="Site name"
-          description="The brand or site label shown across the dashboard."
-          value={form.siteName}
-          onChange={(value) => setForm((current) => ({ ...current, siteName: value }))}
-          placeholder="HTML Improvement"
-        />
-      </div>
+      <div className="space-y-6">
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-accent/25 bg-accent/10 text-xs font-bold text-accent">1</span>
+            <span className="text-sm font-semibold text-text-primary">Identity</span>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Input
+              label="Organization"
+              description="Owning client, business group, or internal org."
+              value={form.organizationName}
+              onChange={(value) => setForm((current) => ({ ...current, organizationName: value }))}
+              placeholder="Maximo SEO"
+              required
+            />
+            <Input
+              label="Site name"
+              description="The brand or site label shown across the dashboard."
+              value={form.siteName}
+              onChange={(value) => setForm((current) => ({ ...current, siteName: value }))}
+              placeholder="HTML Improvement"
+              required
+            />
+          </div>
+        </div>
 
-      <div className="grid gap-4 md:grid-cols-[1.1fr_0.9fr]">
-        <Input
-          label="Domain"
-          description="Canonical site URL used for article source matching and UTM defaults."
-          value={form.domain}
-          onChange={(value) => setForm((current) => ({ ...current, domain: value }))}
-          placeholder="https://example.com"
-          icon={<Globe2 className="h-4 w-4" />}
-        />
-        <Input
-          label="Timezone"
-          description="Base timezone for scheduling, calendar defaults, and publish windows."
-          value={form.timezone}
-          onChange={(value) => setForm((current) => ({ ...current, timezone: value }))}
-          placeholder="America/Chicago"
-        />
-      </div>
+        <div className="border-t border-border/50 pt-6">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-accent/25 bg-accent/10 text-xs font-bold text-accent">2</span>
+            <span className="text-sm font-semibold text-text-primary">Configuration</span>
+          </div>
+          <div className="grid gap-4 md:grid-cols-[1.1fr_0.9fr]">
+            <Input
+              label="Domain"
+              description="Canonical site URL used for article source matching and UTM defaults."
+              value={form.domain}
+              onChange={(value) => setForm((current) => ({ ...current, domain: value }))}
+              placeholder="https://example.com"
+              icon={<Globe2 className="h-4 w-4" />}
+              required
+            />
+            <Input
+              label="Timezone"
+              description="Base timezone for scheduling, calendar defaults, and publish windows."
+              value={form.timezone}
+              onChange={(value) => setForm((current) => ({ ...current, timezone: value }))}
+              placeholder="America/Chicago"
+            />
+          </div>
+        </div>
 
-      <label className="field-group">
-        <span className="field-label">Brand voice</span>
-        <p className="mt-1 text-xs leading-5 text-text-muted">
-          Give the generator tone constraints, messaging guardrails, and what to avoid.
-        </p>
-        <textarea
-          value={form.brandVoice}
-          onChange={(event) =>
-            setForm((current) => ({ ...current, brandVoice: event.target.value }))
-          }
-          rows={5}
-          placeholder="Direct, practical, and premium. Avoid hype. Anchor every post to tangible value and keep CTAs clear."
-          className={cn('field-input mt-2 rounded-xl', 'min-h-[148px] resize-y')}
-        />
-      </label>
+        <div className="border-t border-border/50 pt-6">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-accent/25 bg-accent/10 text-xs font-bold text-accent">3</span>
+            <span className="text-sm font-semibold text-text-primary">Brand</span>
+          </div>
+          <label className="field-group">
+            <span className="field-label">Brand voice</span>
+            <p className="mt-1 text-xs leading-5 text-text-muted">
+              Give the generator tone constraints, messaging guardrails, and what to avoid.
+            </p>
+            <textarea
+              value={form.brandVoice}
+              onChange={(event) =>
+                setForm((current) => ({ ...current, brandVoice: event.target.value }))
+              }
+              rows={5}
+              placeholder="Direct, practical, and premium. Avoid hype. Anchor every post to tangible value and keep CTAs clear."
+              className={cn('field-input mt-2 rounded-xl', 'min-h-[136px] resize-y')}
+            />
+          </label>
+        </div>
+      </div>
 
       <div className="flex flex-col gap-4 border-t border-border/70 pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm leading-6 text-text-secondary">
@@ -160,6 +183,7 @@ function Input({
   onChange,
   placeholder,
   icon,
+  required,
 }: {
   label: string;
   description?: string;
@@ -167,10 +191,11 @@ function Input({
   onChange: (value: string) => void;
   placeholder: string;
   icon?: React.ReactNode;
+  required?: boolean;
 }) {
   return (
     <label className="field-group">
-      <span className="field-label">{label}</span>
+      <span className="field-label">{label}{required && <span className="ml-1 text-accent">*</span>}</span>
       {description ? <p className="mt-1 text-xs leading-5 text-text-muted">{description}</p> : null}
       <div className="relative">
         {icon ? (
@@ -182,6 +207,7 @@ function Input({
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
+          required={required}
           className={cn('field-input mt-2', icon ? 'pl-11' : '')}
         />
       </div>
