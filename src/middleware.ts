@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabasePublicConfigStatus } from '@/lib/social/env';
-import { refreshSupabaseSession } from '@/lib/supabase/auth';
+import { refreshSupabaseSession, getOriginFromRequest } from '@/lib/supabase/auth';
 
 const PROTECTED_PATHS = ['/dashboard', '/sites', '/calendar', '/history', '/activity', '/settings'];
 
@@ -13,7 +13,8 @@ export async function middleware(request: NextRequest) {
   const { response, user } = await refreshSupabaseSession(request);
 
   if (!user) {
-    const loginUrl = new URL('/auth/login', request.url);
+    const origin = getOriginFromRequest(request);
+    const loginUrl = new URL('/auth/login', origin);
     const supabaseConfig = getSupabasePublicConfigStatus();
     if (!supabaseConfig.configured) {
       loginUrl.searchParams.set('authSetup', 'missing-env');

@@ -1,7 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { User } from '@supabase/supabase-js';
 import { createServerClient } from '@supabase/ssr';
-import { getSupabasePublicConfigStatus } from '@/lib/social/env';
+import { getSupabasePublicConfigStatus, getPublicEnv } from '@/lib/social/env';
+
+export function getOriginFromRequest(request: NextRequest): string {
+  const forwardedHost = request.headers.get('x-forwarded-host');
+  const forwardedProto = request.headers.get('x-forwarded-proto') || 'https';
+  
+  if (forwardedHost) {
+    return `${forwardedProto}://${forwardedHost}`;
+  }
+  
+  const appUrl = getPublicEnv().appUrl;
+  if (appUrl) {
+    try {
+      const url = new URL(appUrl);
+      return url.origin;
+    } catch {
+      // Fall through to request.url
+    }
+  }
+  
+  return new URL(request.url).origin;
+}
 
 function applyCookies(
   response: NextResponse,

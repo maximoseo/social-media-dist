@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { getSupabasePublicConfigStatus } from '@/lib/social/env';
-import { sanitizeRedirectPath } from '@/lib/supabase/auth';
+import { sanitizeRedirectPath, getOriginFromRequest } from '@/lib/supabase/auth';
 
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = new URL(request.url);
+  const origin = getOriginFromRequest(request);
+  const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
   const next = sanitizeRedirectPath(
     searchParams.get('next') ?? searchParams.get('redirect'),

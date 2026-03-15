@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { hasBrowserSupabaseConfig } from '@/lib/social/env';
+import { getOriginFromRequest } from '@/lib/supabase/auth';
 
 export async function GET(request: NextRequest) {
-  const loginUrl = new URL('/auth/login', request.url);
+  const origin = getOriginFromRequest(request);
+  const loginUrl = new URL('/auth/login', origin);
   const response = NextResponse.redirect(loginUrl);
 
   if (!hasBrowserSupabaseConfig()) {
