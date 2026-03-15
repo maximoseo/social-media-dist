@@ -11,8 +11,8 @@ import {
   LayoutDashboard,
   LibraryBig,
   Orbit,
-  ShieldCheck,
   Settings2,
+  ShieldCheck,
 } from 'lucide-react';
 import ThemeToggle from '@/components/ThemeToggle';
 import { LogoutButton } from './LogoutButton';
@@ -50,6 +50,7 @@ export function AppShell({
   const pathname = usePathname();
   const currentSiteId = pathname.startsWith('/sites/') ? pathname.split('/')[2] : null;
   const currentSite = currentSiteId ? sites.find((site) => site.id === currentSiteId) : null;
+  const otherSites = sites.filter((site) => site.id !== currentSiteId);
   const mobileLinks = currentSite
     ? siteIcons.map((item) => ({
         label: item.label,
@@ -73,17 +74,13 @@ export function AppShell({
                 </div>
                 <div>
                   <p className="text-base font-semibold text-white">Social Media Dist</p>
-                  <p className="text-sm text-white/58">Operational publishing surface</p>
+                  <p className="text-sm text-white/58">Publishing pipeline</p>
                 </div>
               </div>
             </div>
             <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-200">
               Live
             </div>
-          </div>
-          <div className="mt-5 flex items-center gap-2 text-xs text-white/52">
-            <ShieldCheck className="h-4 w-4 text-accent" />
-            Auth, queue state, and publishing controls in one shell
           </div>
         </Link>
 
@@ -123,32 +120,34 @@ export function AppShell({
           )}
         </nav>
 
+        {/* ── Active project card ──────────────────── */}
         {currentSite ? (
-          <div className="mt-6 rounded-2xl border border-white/8 bg-white/[0.04] p-4">
+          <div className="mt-6 rounded-2xl border border-accent/20 bg-accent/[0.08] p-4 shadow-[0_4px_16px_-8px_hsl(var(--accent-glow)/0.3)]">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="eyebrow text-white/45">Current site</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-accent">Active project</p>
                 <p className="mt-2 text-base font-semibold text-white">{currentSite.name}</p>
                 <p className="mt-1 text-sm text-white/55">{currentSite.domain}</p>
               </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-accent">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-accent/25 bg-accent/15 text-accent">
                 <Orbit className="h-4 w-4" />
               </div>
             </div>
           </div>
         ) : null}
 
+        {/* ── Project switcher ─────────────────────── */}
         <div className="mt-6">
           <div className="flex items-center justify-between px-3">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">
-              Sites
+              {currentSite ? 'Switch project' : 'All projects'}
             </p>
             <span className="rounded-full bg-white/6 px-2.5 py-1 text-[11px] font-medium text-white/55">
               {sites.length}
             </span>
           </div>
           <div className="mt-3 space-y-2">
-            {sites.map((site) => (
+            {(currentSite ? otherSites : sites).map((site) => (
               <Link
                 key={site.id}
                 href={`/sites/${site.id}`}
@@ -156,7 +155,7 @@ export function AppShell({
                   'block rounded-xl border px-4 py-3.5 transition-all',
                   currentSiteId === site.id
                     ? 'border-accent/25 bg-accent/[0.14] text-white shadow-[0_4px_16px_-8px_hsl(var(--accent-glow)/0.4)]'
-                    : 'border-white/10 bg-white/[0.045] text-white/70 hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/[0.075]',
+                    : 'border-white/10 bg-white/[0.045] text-white/70 hover:-translate-y-0.5 hover:border-accent/15 hover:bg-white/[0.075]',
                 )}
               >
                 <div className="flex items-center justify-between gap-3">
@@ -168,6 +167,9 @@ export function AppShell({
                 </div>
               </Link>
             ))}
+            {currentSite && otherSites.length === 0 && (
+              <p className="px-4 py-3 text-xs text-white/40">No other projects. Create one from the dashboard.</p>
+            )}
           </div>
         </div>
 
@@ -195,7 +197,7 @@ export function AppShell({
               <div className="flex flex-wrap items-center gap-2">
                 <span className="toolbar-chip">
                   <span className="h-2 w-2 rounded-full bg-success animate-pulse-dot" />
-                  {currentSite ? 'Site cockpit' : 'Publishing control'}
+                  {currentSite ? 'Site workspace' : 'Dashboard'}
                 </span>
                 {currentSite ? <span className="toolbar-chip hidden sm:inline-flex">{currentSite.domain}</span> : null}
               </div>
@@ -203,13 +205,15 @@ export function AppShell({
                 {currentSite ? currentSite.name : 'Workspace Dashboard'}
               </h1>
               <p className="mt-1 text-sm text-text-secondary">
-                {currentSite ? currentSite.domain : `${sites.length} workspaces available in this account`}
+                {currentSite
+                  ? 'Manage articles, drafts, calendar, and publishing for this site.'
+                  : `${sites.length} workspace${sites.length === 1 ? '' : 's'} available — select one to manage its pipeline.`}
               </p>
             </div>
             <div className="flex items-center gap-3">
               <div className="hidden rounded-full border border-border/70 bg-surface-raised/70 px-3 py-1.5 text-xs font-medium text-text-secondary md:inline-flex">
                 <span className="mr-2 inline-flex h-2 w-2 rounded-full bg-success animate-pulse-dot" />
-                Publishing services connected server-side
+                Services connected
               </div>
               <div className="flex items-center gap-3 lg:hidden">
                 <ThemeToggle />
